@@ -1,0 +1,15 @@
+Base path:	Sample name:	Section name	User ID
+C:\Data\BAS_sjro\June 2014\Cr_HE-tube\Potter Cove\L15	L15-H16 PC	L15-H16 Xrad	sjro
+Year	Month	Day	Time
+2014	06	13	13
+Voltage	40	kV	
+Current	40	mA	
+Exposure time	200	ms	
+line camera signal level	28028	at 25 ms	
+Step size	60	microns	
+XRF	OFF		
+XRF exp. time	0	seconds	
+Start coordinate	338.0	Stop coordinate	885.0
+XRF voltage and current	0	  	0
+Tube	Cr-HE		
+Optical Start	0.5	Optical End	929.5

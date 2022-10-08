@@ -1,0 +1,15 @@
+Base path:	Sample name:	Section name	User ID
+C:\Data\BAS_sjro\June 2014\Cr_HE-tube\Macquarie Island	EM1-LIV1C & MAT1B	MAT1A XRF	sjro
+Year	Month	Day	Time
+2014	06	07	19
+Voltage	40	kV	
+Current	40	mA	
+Exposure time	0	ms	
+line camera signal level	29244	at 25 ms	
+Step size	100	microns	
+XRF	ON		
+XRF exp. time	10	seconds	
+Start coordinate	1435.0	Stop coordinate	1675.0
+XRF voltage and current	30	  	40
+Tube	Cr-HE		
+Optical Start	0.5	Optical End	1739.5
