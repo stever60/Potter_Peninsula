@@ -1402,11 +1402,11 @@ y <- x13$altitude
 x.err <- x13$ageSds
 #arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
 #points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 22, col= "black", bg= "blue", cex = 1,
+plot(x, y, pch = 21, col= "black", bg= "blue", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
 par(new=TRUE)
-plot(x, y, pch = 22, col= "black", bg= "blue", cex = 1,
+plot(x, y, pch = 21, col= "black", bg= "blue", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 axis(4,  ylim=c(0,200), col = "red", col.lab = "red", col.axis = "red")
 mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
@@ -1423,11 +1423,11 @@ y <- x14$altitude
 x.err <- x14$ageSds
 #arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
 #points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 24, col= "black", bg= "red", cex = 1,
+plot(x, y, pch = 21, col= "black", bg= "red", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
 par(new=TRUE)
-plot(x, y, pch = 24, col= "black", bg= "red", cex = 1,
+plot(x, y, pch = 21, col= "black", bg= "red", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 axis(4,  seq(0,200,100), tck=-0.04, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
 axis(4, seq(0,200,25),labels=rep("",9), tck=-0.02, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
