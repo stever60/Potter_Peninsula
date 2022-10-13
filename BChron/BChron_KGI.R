@@ -1388,32 +1388,12 @@ plot(x, y, pch = 21, col= "black", bg= "green", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
 par(new=TRUE)
-plot(x, y, pch = 21, col= "black", bg= "green", cex = 1,
+plot(x, y, pch = 21, col= "red", bg= "red", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
-axis(4,  ylim=c(0,200), col = "red", col.lab = "red", col.axis = "red")
-mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
+axis(4,  ylim=c(0,200), col = "grey", col.lab = "grey", col.axis = "grey")
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "grey", cex = 0.75)
 par(new = FALSE) #remove hold on the plot frame to add median values
 
-#Add Fildes new cosmo ages to plot 5 on secondary axis of altitude
-par(new=TRUE)
-x <- x13$ages
-#y <- c(0.004, 0.005, 0.006)
-y <- x13$altitude
-x.err <- x13$ageSds
-#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
-#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 21, col= "black", bg= "blue", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
-arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
-par(new=TRUE)
-plot(x, y, pch = 21, col= "black", bg= "blue", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
-axis(4,  ylim=c(0,200), col = "red", col.lab = "red", col.axis = "red")
-mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
-par(new = FALSE) #remove hold on the plot frame to add median values
-
-#par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
-#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
 
 #Add KGI cosmo ages to plot 5 on secondary axis of altitude
 par(new=TRUE)
@@ -1423,15 +1403,39 @@ y <- x14$altitude
 x.err <- x14$ageSds
 #arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
 #points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 21, col= "black", bg= "red", cex = 1,
+plot(x, y, pch = 21, col= "darkgrey", bg= "darkgrey", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "grey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "darkgrey", bg= "darkgrey", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+axis(4,  seq(0,200,100), tck=-0.04, ylim=c(0,100), col = "grey", col.lab = "grey", col.axis = "grey")
+axis(4, seq(0,200,25),labels=rep("",9), tck=-0.02, ylim=c(0,100), col = "grey", col.lab = "grey", col.axis = "grey")
+mtext("", side=4, line=2, col = "red", cex = 0.75)
+
+#Add Fildes new cosmo ages to plot 5 on secondary axis of altitude
+par(new=TRUE)
+x <- x13$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13$altitude
+x.err <- x13$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "blue", bg= "blue", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
 arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
 par(new=TRUE)
-plot(x, y, pch = 21, col= "black", bg= "red", cex = 1,
+plot(x, y, pch = 21, col= "blue", bg= "blue", cex = 1,
      xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
-axis(4,  seq(0,200,100), tck=-0.04, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
-axis(4, seq(0,200,25),labels=rep("",9), tck=-0.02, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
-mtext("", side=4, line=2, col = "red", cex = 0.75)
+axis(4,  ylim=c(0,200), col = "grey", col.lab = "grey", col.axis = "grey")
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "grey", cex = 0.75)
+par(new = FALSE) #remove hold on the plot frame to add median values
+
+#par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
+#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
+
+
+
 
 p8 <- plot(xDens8, main="King George Island: advance",
            xlab="Age [a BP]", xlim = c(-100, 12000),
