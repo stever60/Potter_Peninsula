@@ -86,6 +86,7 @@ x11 <- read.csv("Aq_Moss_KGI.csv")
 x12 <- read.csv("Aq_Moss_SSI.csv")
 # Compare with published data from Fildes, Potter, KGI, SSI
 x13 <- read.csv("Cosmo_Fildes.csv")
+x13b <- read.csv("Cosmo_Potter.csv")
 x14 <- read.csv("Cosmo_KGI.csv")
 # Compare with additional data from Fildes
 x15 <- read.csv("Lakes_basal_Fildes.csv")
@@ -108,12 +109,12 @@ xAges10 <- with (x10, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,pos
 xAges11 <- with (x11, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges12 <- with (x12, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges13 <- with (x13, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xAges13b <- with (x13b, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges14 <- with (x14, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges15 <- with (x15, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges16 <- with (x16, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges20 <- with (x20, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges21 <- with (x21, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
-
 
 #plot age distribution for each group
 plot(xAges2, withPositions = TRUE)
@@ -127,6 +128,7 @@ plot(xAges10, withPositions = TRUE)
 plot(xAges11, withPositions = TRUE)
 plot(xAges12, withPositions = TRUE)
 plot(xAges13, withPositions = TRUE)
+plot(xAges13b, withPositions = TRUE)
 plot(xAges14, withPositions = TRUE)
 plot(xAges15, withPositions = TRUE)
 plot(xAges16, withPositions = TRUE)
@@ -145,6 +147,7 @@ xAges10_sum <- summary (xAges10, prob = 95.4)
 xAges11_sum <- summary (xAges11, prob = 95.4)
 xAges12_sum <- summary (xAges12, prob = 95.4)
 xAges13_sum <- summary (xAges13, prob = 95.4)
+xAges13b_sum <- summary (xAges13b, prob = 95.4)
 xAges14_sum <- summary (xAges14, prob = 95.4)
 xAges15_sum <- summary (xAges15, prob = 95.4)
 xAges16_sum <- summary (xAges16, prob = 95.4)
@@ -165,6 +168,7 @@ xDens10 <- with(x10, BchronDensity(ages = ages, ageSds = ageSds, calCurves = cal
 xDens11 <- with(x11, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20))
 xDens12 <- with(x12, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80))
 xDens13 <- with(x13, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
+xDens13b <- with(x13b, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
 xDens14 <- with(x14, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final plot
 xDens15 <- with(x15, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
 xDens16 <- with(x16, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final table
@@ -183,6 +187,7 @@ xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calC
 #xDens11_output <- merge(xDens11$ageGrid,xDens11$densities)
 #xDens12_output <- merge(xDens12$ageGrid,xDens12$densities)
 #xDens13_output <- merge(xDens13$ageGrid,xDens13$densities)
+#xDens13b_output <- merge(xDens13$ageGrid,xDens13$densities)
 #xDens14_output <- merge(xDens14$ageGrid,xDens14$densities)
 #xDens15_output <- merge(xDens15$ageGrid,xDens15$densities)
 #xDens16_output <- merge(xDens16$ageGrid,xDens16$densities)
@@ -199,6 +204,7 @@ xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calC
 #write.csv(xDens11_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens11_densities.csv", row.names = FALSE)
 #write.csv(xDens12_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens12_densities.csv", row.names = FALSE)
 #write.csv(xDens13_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens13_densities.csv", row.names = FALSE)
+#write.csv(xDens13b_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens13_densities.csv", row.names = FALSE)
 #write.csv(xDens14_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens14_densities.csv", row.names = FALSE)
 #write.csv(xDens15_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens15_densities.csv", row.names = FALSE)
 #write.csv(xDens16_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Output/xDens16_densities.csv", row.names = FALSE)
@@ -215,6 +221,7 @@ summary(xDens10, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens11, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens12, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens13, type = "outliers", prob = 0.95) # Look at outlier probabilities
+summary(xDens13b, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens14, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens15, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens16, type = "outliers", prob = 0.95) # Look at outlier probabilities
@@ -237,6 +244,7 @@ summary(xDens10, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens11, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens12, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens13, type = "outliers", prob = 0.68) # Look at outlier probabilities
+summary(xDens13b, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens14, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens15, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens16, type = "outliers", prob = 0.68) # Look at outlier probabilities
@@ -393,6 +401,17 @@ p_axis <- c(axis(1, seq(0,12000,1000), tck=-0.04), axis(1, seq(-100,12000,100),l
             axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
             axis(3, seq(0,12000,1000), labels=rep("",13), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
             axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
+par(new = FALSE) #remove hold on the plot frame to add median values
+
+#Cosmo fildes
+p13b <- plot(xDens13b, main="Potter He-3 cosmogenic exposure dating",
+            xlab="Age [a BP]", xlim = c(-100, 60000),
+            tck=-0.02, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+par(new = TRUE) #hold the plot frame to add median values
+p_axis <- c(axis(1, seq(0,60000,10000), tck=-0.02), axis(1, seq(-100,60000,10000),labels=rep("",7), tck=-0.02),
+            axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.02), 
+            axis(3, seq(0,60000,10000), labels=rep("",7), tck=0.02),axis(3, seq(-100,60000,10000),labels=rep("",7), tck=0.02),
+            axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.02))
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 
@@ -1282,10 +1301,7 @@ text(500, 160, "E", font = 2, cex = 1.5,  family = 'sans')
 
 dev.off() #need to include this to write to pdf file fully - will delete screen plot
 
-
-
-
-#++++++++++++++ DON'T ADD TO FINAL PLOT  ++++++++++
+#++++++++++++++ DON'T ADD TO FINAL PLOTS  ++++++++++
 p16 <- plot(xDens11, main="Fildes Aquatic Moss",
             xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
             tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
@@ -1299,7 +1315,8 @@ par(new = FALSE) #remove hold on the plot frame to add median values
 
 
 
-# POTTER PAPER 
+
+# POTTER PAPER  ---------------------------------------------------------
 
 # Clear plots
 if(!is.null(dev.list())) dev.off()
@@ -1351,13 +1368,70 @@ p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labe
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 #other types of plot
-pr6 <- plot(r6_res,type='stacked', xlim = r6_revtimeRange, legend = TRUE, legend.arg = NULL)  #most useful for summaries of multiple sites / types
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.03,0.001), labels=rep("",31), tck=-0.02), 
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
-            axis(4, seq(0,0.03,0.001), labels=rep("",31), tck=0.02))
+#pr6 <- plot(r6_res,type='stacked', xlim = r6_revtimeRange, legend = TRUE, legend.arg = NULL)  #most useful for summaries of multiple sites / types
+#par(new = TRUE) #hold the plot frame to add median values
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+#            axis(2, seq(0,0.03,0.001), labels=rep("",31), tck=-0.02), 
+#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
+#            axis(4, seq(0,0.03,0.001), labels=rep("",31), tck=0.02))
+#par(new = FALSE) #remove hold on the plot frame to add median values
+
+#Add Potter He-3 cosmo ages to plot 5 on secondary axis of altitude
+par(new=TRUE)
+x <- x13b$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13b$altitude
+x.err <- x13b$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "black", bg= "green", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "black", bg= "green", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+axis(4,  ylim=c(0,200), col = "red", col.lab = "red", col.axis = "red")
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
 par(new = FALSE) #remove hold on the plot frame to add median values
+
+#Add Fildes new cosmo ages to plot 5 on secondary axis of altitude
+par(new=TRUE)
+x <- x13$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13$altitude
+x.err <- x13$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 22, col= "black", bg= "blue", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 22, col= "black", bg= "blue", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+axis(4,  ylim=c(0,200), col = "red", col.lab = "red", col.axis = "red")
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
+par(new = FALSE) #remove hold on the plot frame to add median values
+
+#par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
+#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
+
+#Add KGI cosmo ages to plot 5 on secondary axis of altitude
+par(new=TRUE)
+x <- x14$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x14$altitude
+x.err <- x14$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 24, col= "black", bg= "red", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 24, col= "black", bg= "red", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,12000), ylim=c(0,200), axes = FALSE)
+axis(4,  seq(0,200,100), tck=-0.04, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
+axis(4, seq(0,200,25),labels=rep("",9), tck=-0.02, ylim=c(0,100), col = "red", col.lab = "red", col.axis = "red")
+mtext("", side=4, line=2, col = "red", cex = 0.75)
 
 p8 <- plot(xDens8, main="King George Island: advance",
            xlab="Age [a BP]", xlim = c(-100, 12000),
