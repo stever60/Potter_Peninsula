@@ -1,33 +1,33 @@
-﻿,,,,,,,Calibrated_age_(cal_a_BP),,,,,,,,,
-No.,Lab_ID,Material_dated,_Section_or_Core_Depth_(m),Unit,delta13C_ppm,AMS_14C_age_(14C_a),Max.,Min.,1sigma_%,Max.,Min.,2sigma_%,Mean,2sigma,Median,Matrix_dated_context_interpretation
-1,Beta-441402,Bone (penguin),1.5,4,−21.6,7860 ± 40,7590,7400,68.3,7680,7280,95.4,7490,200,7490,Fine seds. below till; max. readvance age
-2,Beta-441403,Bone (penguin),1.55,4,−22.2,7890 ± 40,7610,7420,68.3,7710,7310,95.4,7520,200,7520,Fine seds. below till; max. readvance age
-3,ETH-67269,Bivalve shell,1.6,4,−1.6,8010 ± 85,7760,7500,68.3,7910,7400,95.4,7630,250,7630,Fine seds. below till; max. readvance age
-4,ETH-67267,Bivalve shell,1.7,4,0,7805 ± 85,7560,7320,68.3,7670,7180,95.4,7440,240,7440,Fine seds. below till; max. readvance age
-5,Beta - 431964,Bone (penguin),1.85,03-Apr,−23.1,7780 ± 30,7510,7320,68.3,7610,7220,95.4,7410,190,7420,Fine seds. below till; max. readvance age
-6,ETH-67270,Bivalve shell,2.05,3,−1.3,8170 ± 85,7920,7660,68.3,8030,7520,95.4,7780,250,7780,Fine seds. below till; max. readvance age
-7,ETH-67272,Bivalve shell,2.1,3,−13.4,8115 ± 80,7850,7600,68.3,7970,7490,95.4,7730,250,7730,Fine seds. below till; max. readvance age
-8,ETH-71994,Bivalve shell,2.56,3,2,7920 ± 20,7630,7450,68.3,7740,7350,95.4,7540,190,7540,Fine seds. below till; max. readvance age
-9,ETH-67268,Bivalve shell,2.7,3,−13.6,7705 ± 80,7470,7230,68.3,7580,7090,95.4,7340,250,7350,Fine seds. below till; max. readvance age
-10,ETH-67273,Bivalve shell,2.95,1,−4.4,8005 ± 85,7750,7500,68.3,7900,7400,95.4,7630,250,7630,Fine seds. below till; max. readvance age
-11,ETH-67275,Bivalve shell,3.05,1,−12.1,7950 ± 70,7680,7450,68.3,7810,7340,95.4,7570,230,7570,Fine seds. below till; max. readvance age
-12,ETH-67274,Seaweed trash layer,3.05,1,−2.3,8020 ± 90,7770,7510,68.3,7920,7410,95.4,7640,260,7640,Fine seds. below till; max. readvance age
-13,ETH-67276,Bivalve shell,3.1,1,−10.5,8145 ± 70,7880,7640,68.3,7990,7530,95.4,7760,230,7760,Fine seds. below till; max. readvance age
-14,ETH-72000,Bivalve shell,3.11,1,1.3,8015 ± 20,7730,7540,68.3,7830,7440,95.4,7630,200,7630,Fine seds. below till; max. readvance age
-15,ETH-67277,Bivalve shell,3.3,1,−1,8300 ± 75,8030,7770,68.3,8170,7660,95.4,7910,260,7910,Fine seds. below till; max. readvance age
-16,ETH-71996,Bivalve shell,3.41,1,2.9,8005 ± 20,7720,7520,68.3,7820,7430,95.4,7620,200,7620,Fine seds. below till; max. readvance age
-17,ETH-71997,Bivalve shell,3.46,1,0.8,7995 ± 20,7700,7510,68.3,7810,7420,95.4,7610,190,7610,Fine seds. below till; max. readvance age
-18,Beta - 441404,Bone (indeterminate),3.5,1,−23.8,8100 ± 40,7820,7610,68.3,7930,7510,95.4,7720,210,7720,Fine seds. below till; max. readvance age
-19,ETH-67278,bivalve shell,3.5,1,−9,8090 ± 75,7830,7580,68.3,7950,7470,95.4,7710,240,7710,Fine seds. below till; max. readvance age
-20,ETH-72001,Bivalve shell,4,1,2.1,7995 ± 65,7730,7500,68.3,7860,7400,95.4,7620,230,7620,Fine seds. below till; max. readvance age
-21,ETH-71995,Bivalve shell,4.47,1,8,8195 ± 25,7910,7710,68.3,8000,7600,95.4,7800,200,7800,Fine seds. below till; max. readvance age
-22,SUERC-14413,Seaweed trash layer,2.79#,-,−25.3,7831 ± 39,7570,7370,68.3,7660,7260,95.4,7460,200,7460,Fine seds. below till; max. readvance age
-23,SUERC-14414,Seaweed trash layer,2.79#,-,−25.6,7883 ± 39,7610,7420,68.3,7700,7300,95.4,7510,200,7510,Fine seds. below till; max. readvance age
-24,SUERC-14416,Shell fragment,2.79#,-,1.4,7853 ± 38,7580,7390,68.3,7670,7280,95.4,7480,200,7480,Fine seds. below till; max. readvance age
-25,SUERC-14417,Shell fragment,2.79#,-,0.2,7842 ± 37,7570,7380,68.3,7660,7270,95.4,7470,200,7470,Fine seds. below till; max. readvance age
-S&J,Birm-23,Seaweed trash layer,2.5,C,-,7863 ± 86,7460,7200,68.3,7570,7060,95.4,7320,260,7330,Fine seds. below till; max. readvance age
-S&J,Birm-48a,Shells,2.5,A-B,-,9670 ± 230,9900,9240,68.3,10220,8950,95.4,9570,650,9560,Fine seds. below till; max. readvance age
-26,Beta-441400,Terrestrial moss ,2.2,1,−20.9,1880 ± 30,1820,1770,47.4,1870,1860,1.8,1770,80,1780,Reworked moraine seds.; max. readvance age
-,,,,,,,1750,1730,20.8,1840,1700,93.7,,,,
-27,Beta-441401,Terrestrial moss ,2.2,1,−22.1,1850 ± 30,1810,1770,23.2,1830,1700,84.4,1740,110,1740,Reworked moraine seds.; max. readvance age
-,,,,,,,1750,1700,45.1,1660,1610,11.1,,,,
+﻿,,,,,,,,Calibrated_age_cal_a_BP,,,,,,,,,
+No.,Lab_ID,Material_dated,_Section_or_Core_Depth_(m),Unit,delta13C_ppm,AMS_14C_age_14C_a,AMS_14C_1SD_14C_a,Max.,Min.,1sigma_pc_probability,Max.,Min.,2sigma_pc_probability,Mean,2sigma,Median,Matrix_dated_context_interpretation
+1,Beta-441402,Bone (penguin),1.5,4,-21.6,7860,40,7590,7400,68.3,7680,7280,95.4,7490,200,7490,Fine seds. below till; max. readvance age
+2,Beta-441403,Bone (penguin),1.55,4,-22.2,7890,40,7610,7420,68.3,7710,7310,95.4,7520,200,7520,Fine seds. below till; max. readvance age
+3,ETH-67269,Bivalve shell,1.6,4,-1.6,8010,85,7760,7500,68.3,7910,7400,95.4,7630,250,7630,Fine seds. below till; max. readvance age
+4,ETH-67267,Bivalve shell,1.7,4,0,7805,85,7560,7320,68.3,7670,7180,95.4,7440,240,7440,Fine seds. below till; max. readvance age
+5,Beta - 431964,Bone (penguin),1.85,3/4,-23.1,7780,30,7510,7320,68.3,7610,7220,95.4,7410,190,7420,Fine seds. below till; max. readvance age
+6,ETH-67270,Bivalve shell,2.05,3,-1.3,8170,85,7920,7660,68.3,8030,7520,95.4,7780,250,7780,Fine seds. below till; max. readvance age
+7,ETH-67272,Bivalve shell,2.1,3,-13.4,8115,80,7850,7600,68.3,7970,7490,95.4,7730,250,7730,Fine seds. below till; max. readvance age
+8,ETH-71994,Bivalve shell,2.56,3,2,7920,20,7630,7450,68.3,7740,7350,95.4,7540,190,7540,Fine seds. below till; max. readvance age
+9,ETH-67268,Bivalve shell,2.7,3,-13.6,7705,80,7470,7230,68.3,7580,7090,95.4,7340,250,7350,Fine seds. below till; max. readvance age
+10,ETH-67273,Bivalve shell,2.95,1,-4.4,8005,85,7750,7500,68.3,7900,7400,95.4,7630,250,7630,Fine seds. below till; max. readvance age
+11,ETH-67275,Bivalve shell,3.05,1,-12.1,7950,70,7680,7450,68.3,7810,7340,95.4,7570,230,7570,Fine seds. below till; max. readvance age
+12,ETH-67274,Seaweed trash layer,3.05,1,-2.3,8020,90,7770,7510,68.3,7920,7410,95.4,7640,260,7640,Fine seds. below till; max. readvance age
+13,ETH-67276,Bivalve shell,3.1,1,-10.5,8145,70,7880,7640,68.3,7990,7530,95.4,7760,230,7760,Fine seds. below till; max. readvance age
+14,ETH-72000,Bivalve shell,3.11,1,1.3,8015,20,7730,7540,68.3,7830,7440,95.4,7630,200,7630,Fine seds. below till; max. readvance age
+15,ETH-67277,Bivalve shell,3.3,1,-1,8300,75,8030,7770,68.3,8170,7660,95.4,7910,260,7910,Fine seds. below till; max. readvance age
+16,ETH-71996,Bivalve shell,3.41,1,2.9,8005,20,7720,7520,68.3,7820,7430,95.4,7620,200,7620,Fine seds. below till; max. readvance age
+17,ETH-71997,Bivalve shell,3.46,1,0.8,7995,20,7700,7510,68.3,7810,7420,95.4,7610,190,7610,Fine seds. below till; max. readvance age
+18,Beta - 441404,Bone (indeterminate),3.5,1,-23.8,8100,40,7820,7610,68.3,7930,7510,95.4,7720,210,7720,Fine seds. below till; max. readvance age
+19,ETH-67278,bivalve shell,3.5,1,-9,8090,75,7830,7580,68.3,7950,7470,95.4,7710,240,7710,Fine seds. below till; max. readvance age
+20,ETH-72001,Bivalve shell,4,1,2.1,7995,65,7730,7500,68.3,7860,7400,95.4,7620,230,7620,Fine seds. below till; max. readvance age
+21,ETH-71995,Bivalve shell,4.47,1,8,8195,25,7910,7710,68.3,8000,7600,95.4,7800,200,7800,Fine seds. below till; max. readvance age
+22,SUERC-14413,Seaweed trash layer,2.79,NA,-25.3,7831,39,7570,7370,68.3,7660,7260,95.4,7460,200,7460,Fine seds. below till; max. readvance age
+23,SUERC-14414,Seaweed trash layer,2.79,NA,-25.6,7883,39,7610,7420,68.3,7700,7300,95.4,7510,200,7510,Fine seds. below till; max. readvance age
+24,SUERC-14416,Shell fragment,2.79,NA,1.4,7853,38,7580,7390,68.3,7670,7280,95.4,7480,200,7480,Fine seds. below till; max. readvance age
+25,SUERC-14417,Shell fragment,2.79,NA,0.2,7842,37,7570,7380,68.3,7660,7270,95.4,7470,200,7470,Fine seds. below till; max. readvance age
+S&J,Birm-23,Seaweed trash layer,2.5,C,NA,7863,86,7460,7200,68.3,7570,7060,95.4,7320,260,7330,Fine seds. below till; max. readvance age
+S&J,Birm-48a,Shells,2.5,AB,NA,9670,230,9900,9240,68.3,10220,8950,95.4,9570,650,9560,Fine seds. below till; max. readvance age
+26,Beta-441400,Terrestrial moss ,2.2,1,-20.9,1880,30,1820,1770,47.4,1870,1860,1.8,1770,80,1780,Reworked moraine seds.; max. readvance age
+26,Beta-441400,Terrestrial moss ,2.2,1,-20.9,1880,30,1750,1730,20.8,1840,1700,93.7,1770,80,1780,Reworked moraine seds.; max. readvance age
+27,Beta-441401,Terrestrial moss ,2.2,1,-22.1,1850,30,1810,1770,23.2,1830,1700,84.4,1740,110,1740,Reworked moraine seds.; max. readvance age
+,,,,,,,,1750,1700,45.1,1660,1610,11.1,1740,110,1740,Reworked moraine seds.; max. readvance age

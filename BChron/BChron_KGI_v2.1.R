@@ -119,7 +119,7 @@ x2 <- read.csv("Inputs/x2_ART_Terr20.csv")
 x2.1 <- read.csv("Inputs/x2.1_ART_Hall_Terr20.csv")
 
 # Fildes paper - all Shetland I Moraine marine C14 data - this study and Hall 2007 <20ka
-x4 <- read.csv("Inputs/x4_ART_Hall_Mar20666.csv")
+x4 <- read.csv("Inputs/x4_ART_Mar20666.csv")
 
 # Advance - max age constraints
 x6 <- read.csv("Inputs/x6_Advance_Potter.csv")
@@ -130,85 +130,92 @@ x8 <- read.csv("Inputs/x8_Advance_KGI.csv")
 x9 <- read.csv("Inputs/x9_Retreat_KGI.csv")
 x10 <- read.csv("Inputs/x10_Retreat_SSI.csv")
 x15 <- read.csv("Inputs/x15_Lakes_basal_Fildes.csv")
-x17 <- read.csv("Inputs/x17_Retreat_KGI_earlyHolocene.csv")
+x9.4 <- read.csv("Inputs/x9.4_Retreat_KGI_earlyHolocene.csv")
 
 # Retreat - cosmogenic min age constraints
 x13 <- read.csv("Inputs/x13_Cosmo_Fildes.csv")
 v <- c('ages')  ## create vector of column names to recaluculate as cal ka BP
-x13[ages] <- x13[ages] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
-x13b <- read.csv("Inputs/x13b_Cosmo_Potter.csv")
-x13b[v] <- x13b[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x13[v] <- x13[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x13.1 <- read.csv("Inputs/x13.1_Cosmo_Potter.csv")
+x13.1[v] <- x13.1[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
 x14 <- read.csv("Inputs/x14_Cosmo_KGI.csv")
 x14[v] <- x14[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
 
-# Warm conditions similar to present - Sub-aquatic moss & GDGT Temp
+# Warm conditions similar to present - Sub-aquatic moss & GDGT Temp - & tephra layers
 x5 <- read.csv("Inputs/x5_Aq_moss_Fildes.csv")
 x5 <- subset(x5, calCurves=="shcal20", 
              select=c(id:altitude)) # remove post-bomb (normal) ages for density phase analysis as prob density not comparable to sh20 data & post-bomb data can't be calibrated in BChron and RCarbon
 x11 <- read.csv("Inputs/x11_Aq_Moss_KGI.csv")
 x12 <- read.csv("Inputs/x12_Aq_Moss_SSI.csv")
 x16 <- read.csv("Inputs/x16_Aq_Moss_Fildes.csv")
-x17 <- read.csv("Inputs/Yanou_GDGT.csv")
+x17 <- read.csv("Inputs/x17_Yanou_GDGT.csv")
 
-# Kiteschee Lake - diatom data
-x18 <- read.csv("Inputs/x18_Kite_diatoms.csv")
-
-# Published AP -regional - global data
+# Published AP -regional - global data - density phase analysis
 x20 <- read.csv("Inputs/x20_Kaplan2020_JRI_Advance.csv")
 x20[v] <- x20[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
 x21 <- read.csv("Inputs/x21_Kaplan2020_JRI_Retreat.csv")
 x21[v] <- x21[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
-x22 <- read.csv("Inputs/x22_WAIS_volcanic_flux.csv")
-x23 <- read.csv("Inputs/x23_JRI_ice_core.csv")
-x24 <- read.csv("Inputs/x24_Marcott2013_30_90S.csv")
-x25 <- read.csv("Inputs/x25a_Kaufmann2020.csv")
-x26 <- read.csv("Inputs/x26_Miliken2009.csv")
-x27 <- read.csv("Inputs/x27_Shevenell_TEX86.csv")
-x28 <- read.csv("Inputs/x28_Etourneaux2013_SST.csv")
-x29 <- read.csv("Inputs/x29_Roberts2017_WAP_diatoms.csv")
 
-# Mechanisms figure 
-x30 <- read.csv("Inputs/x30_Laskar2004_InsAnomaly_62S.csv")
-x31 <- read.csv("Inputs/x31_Baggenstos2019_Irradiance.csv")
-x32 <- read.csv("Inputs/x32_Saunders2018_SPECIM.csv")
-x33 <- read.csv("Inputs/x33_Saunders2018_DCond.csv")
-x34 <- read.csv("Inputs/x34_Moreno2018_SAM.csv")
-x35 <- read.csv("Inputs/x35_Vol_flux_WAIS.csv")
+# Calibration and density plotting --------------------------------------------------
 
-# Calibration  --------------------------------------------------
+# Density function runs a non-parametric phase model on 14C and non-14C ages via Gaussian Mixture density estimation
+# numMix - number of mixture components - set to number of datapoints rounded to nearest 10 to avoid overfitting
 
-# Fildes paper - published Shetland I Moraine data
+# Fildes paper - new and published Shetland I Moraine data
 xAges2 <- with (x2, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
-
-# Fildes paper - published Shetland I Moraine data
 xAges2.1 <- with (x2.1, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges4 <- with (x4, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+
+xDens2 <- with(ART_Terr20, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final plot
+xDens2.1 <- with(x2.1, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, numMix = 100)) #final plot
+xDens4 <- with(x4, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5))
 
 # Advance - max age constraints
 xAges6 <- with (x6, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges7 <- with (x7, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 
+xDens6 <- with(x6, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30)) #final plot
+xDens7 <- with(x7, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final plot
+xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80)) #final plot
+
 # Retreat - C14 min age constraints
 xAges9 <- with (x9, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges10 <- with (x10, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges15 <- with (x15, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
-xAges17 <- with (x17, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+
+xDens9 <- with(x9, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30)) #final table
+xDens10 <- with(x10, BchronDensity(ages = ages, ageSds = ageSds, calCurves = calCurves, numMix = 40))
+xDens15 <- with(x15, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
 
 # Retreat - cosmogenic min age constraints
 xAges13 <- with (x13, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
-xAges13b <- with (x13b, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xAges13.1 <- with (x13b, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges14 <- with (x14, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 
-# Aquatic moss datasets - warm conditions
+xDens13 <- with(x13, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
+xDens13.1 <- with(x13b, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
+xDens14 <- with(x14, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final plot
+
+# Warm conditions & tephra layers
 xAges5 <- with (x5, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges11 <- with (x11, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges12 <- with (x12, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges16 <- with (x16, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xAges17 <- with (x17, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+
+xDens5 <- with(x5, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final plot
+xDens11 <- with(x11, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
+xDens12 <- with(x12, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80))
+xDens16 <- with(x16, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final table
+xDens17a <- with(x17a, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final table
 
 # Published AP data
 xAges20 <- with (x20, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
 xAges21 <- with (x21, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+
+xDens20 <- with(x20, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30))
+xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20))
 
 # Plot age distribution for each group ------------------------------------
 plot(xAges2, withPositions = TRUE)
@@ -222,14 +229,13 @@ plot(xAges10, withPositions = TRUE)
 plot(xAges11, withPositions = TRUE)
 plot(xAges12, withPositions = TRUE)
 plot(xAges13, withPositions = TRUE)
-plot(xAges13b, withPositions = TRUE)
+plot(xAges13.1, withPositions = TRUE)
 plot(xAges14, withPositions = TRUE)
 plot(xAges15, withPositions = TRUE)
 plot(xAges16, withPositions = TRUE)
 plot(xAges17, withPositions = TRUE)
 plot(xAges20, withPositions = TRUE)
 plot(xAges21, withPositions = TRUE)
-
 # Summary of highest density region for all input data --------------------
 xAges2_sum <- summary (ART_Terr20_Ages, prob = 95.4)
 xAges2.1_sum <- summary (xAges2.1, prob = 95.4)
@@ -242,47 +248,13 @@ xAges10_sum <- summary (xAges10, prob = 95.4)
 xAges11_sum <- summary (xAges11, prob = 95.4)
 xAges12_sum <- summary (xAges12, prob = 95.4)
 xAges13_sum <- summary (xAges13, prob = 95.4)
-xAges13b_sum <- summary (xAges13b, prob = 95.4)
+xAges13.1_sum <- summary (xAges13b, prob = 95.4)
 xAges14_sum <- summary (xAges14, prob = 95.4)
 xAges15_sum <- summary (xAges15, prob = 95.4)
 xAges16_sum <- summary (xAges16, prob = 95.4)
 xAges17_sum <- summary (xAges17, prob = 95.4)
 xAges20_sum <- summary (xAges20, prob = 95.4)
 xAges21_sum <- summary (xAges21, prob = 95.4)
-
-# Combine ages into a density plot for one 'event' with different  --------
-
-# This function runs a non-parametric phase model on 14C and non-14C ages via Gaussian Mixture density estimation
-# numMix - number of mixture components - set to number of datapoints rounded to nearest 10 to avoid overfitting
-
-# Fildes paper - Artigas terrestrial mosses, Artigas-Hall2010, Artigas-marine, Fildes Aquatic moss 
-ART_Terr20_Dens <- with(ART_Terr20, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final plot
-xDens2.1 <- with(x2.1, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, numMix = 100)) #final plot
-xDens4 <- with(x4, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5))
-
-# Potter-Advance, Fildes-Advance, KGI-Advances, KGI-retreat, Fildes_Aquatic-moss, KGI-Aquatic-moss, SSI-Aquatic-moss
-xDens6 <- with(x6, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30)) #final plot
-xDens7 <- with(x7, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final plot
-xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80)) #final plot
-xDens9 <- with(x9, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30)) #final table
-xDens10 <- with(x10, BchronDensity(ages = ages, ageSds = ageSds, calCurves = calCurves, numMix = 40))
-xDens5 <- with(x5, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final plot
-xDens11 <- with(x11, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
-xDens12 <- with(x12, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80))
-
-# Cosmo data from Fildes, Potter, KGI
-xDens13 <- with(x13, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
-xDens13b <- with(x13b, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 5)) #final plot
-xDens14 <- with(x14, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final plot
-
-# Lake-basal-Fildes, Fildes-Aquatic-moss, KGI-EH-deglaciation
-xDens15 <- with(x15, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
-xDens16 <- with(x16, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final table
-xDens17 <- with(x17, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final table
-# Other AP data
-xDens20 <- with(x20, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30))
-xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20))
-
 # Bind density data and write to file - takes ages! -----------------------
 
 #xDens2_output <- merge(xDens2$ageGrid,xDens2$densities)
@@ -296,7 +268,7 @@ xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calC
 #xDens11_output <- merge(xDens11$ageGrid,xDens11$densities)
 #xDens12_output <- merge(xDens12$ageGrid,xDens12$densities)
 #xDens13_output <- merge(xDens13$ageGrid,xDens13$densities)
-#xDens13b_output <- merge(xDens13$ageGrid,xDens13$densities)
+#xDens13.1_output <- merge(xDens13$ageGrid,xDens13$densities)
 #xDens14_output <- merge(xDens14$ageGrid,xDens14$densities)
 #xDens15_output <- merge(xDens15$ageGrid,xDens15$densities)
 #xDens16_output <- merge(xDens16$ageGrid,xDens16$densities)
@@ -314,12 +286,11 @@ xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calC
 #write.csv(xDens11_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens11_densities.csv", row.names = FALSE)
 #write.csv(xDens12_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens12_densities.csv", row.names = FALSE)
 #write.csv(xDens13_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens13_densities.csv", row.names = FALSE)
-#write.csv(xDens13b_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens13_densities.csv", row.names = FALSE)
+#write.csv(xDens13.1_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens13_densities.csv", row.names = FALSE)
 #write.csv(xDens14_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens14_densities.csv", row.names = FALSE)
 #write.csv(xDens15_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens15_densities.csv", row.names = FALSE)
 #write.csv(xDens16_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens16_densities.csv", row.names = FALSE)
 #write.csv(xDens17_output,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputs/xDens17_densities.csv", row.names = FALSE)
-
 
 # Summary of phases at prob = 0.95 and 0.68 ----------------------------------------
 summary(xDens2, type = "outliers", prob = 0.95) # Look at outlier probabilities 0.95 is the default
@@ -333,7 +304,7 @@ summary(xDens10, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens11, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens12, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens13, type = "outliers", prob = 0.95) # Look at outlier probabilities
-summary(xDens13b, type = "outliers", prob = 0.95) # Look at outlier probabilities
+summary(xDens13.1, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens14, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens15, type = "outliers", prob = 0.95) # Look at outlier probabilities
 summary(xDens16, type = "outliers", prob = 0.95) # Look at outlier probabilities
@@ -346,7 +317,7 @@ summary(xDens7, prob = 0.95) # Look at outlier probabilities
 summary(xDens8, prob = 0.95) # Look at outlier probabilities
 
 #Summary of phases at prob = 0.68
-summary(ART_Terr20_Dens, type = "outliers", prob = 0.68) # Look at outlier probabilities 0.95 is the default
+summary(xDens2, type = "outliers", prob = 0.68) # Look at outlier probabilities 0.95 is the default
 summary(xDens2.1, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens4, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens6, type = "outliers", prob = 0.68) # Look at outlier probabilities
@@ -357,14 +328,13 @@ summary(xDens10, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens11, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens12, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens13, type = "outliers", prob = 0.68) # Look at outlier probabilities
-summary(xDens13b, type = "outliers", prob = 0.68) # Look at outlier probabilities
+summary(xDens13.1, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens14, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens15, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens16, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens17, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens20, type = "outliers", prob = 0.68) # Look at outlier probabilities
 summary(xDens21, type = "outliers", prob = 0.68) # Look at outlier probabilities
-
 
 
 
@@ -1160,11 +1130,15 @@ write.csv(r6_spd$grid,"/Users/Steve/Dropbox/BAS/Data/R/RCarbon/r6_spd.csv", row.
 
 
 
+
 # SECTION 3: Final plots for Fildes and Potter papers ---------------------------------------------------------------
 
 # FILDES PAPER ------------------------------------------------------------
 
 # Plotting set up - need to run this once at start ---------------------------------------------------------
+
+
+# Figure 3 ----------------------------------------------------------------
 
 # Clear plots
 if(!is.null(dev.list())) dev.off()
@@ -1205,12 +1179,8 @@ par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2.5),  mgp=c(2,0.5,0), x
 # for text: font = 2 is bold, 3 is italic, 4 is bold italic
 
 
-# PLOTS -----------------------------------------------------
-
-# Figure 3
-
-# A) Artigas Terrestrial Moss in Moraines (shcal20) [this study]
-ART_Terr20_phaseplot <- plot(ART_Terr20_Dens, main="Artigas Beach: terrestrial moss in moraines",
+# Figure 3A) Artigas Terrestrial Moss in Moraines (shcal20) [this study]
+p2 <- plot(xDens2, main="Artigas Beach: terrestrial moss in moraines",
            #xlab="Age [a BP]", 
            xlim = c(-100, 4000), cex.main = 1,
            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
@@ -1407,9 +1377,143 @@ text(11250, 0.006, "F", font = 2, cex = 1.5,  family = 'sans')
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 
-# Figure 7 Fildes Paper ---------------------------------------------------
+# Figures 5 & 7 Fildes Paper datasets  ---------------------------------------------------
 
-#JRI Advance & retreat
+# Plotting data for figures
+x17 <- read.csv("Inputs/x17_Yanou_GDGT.csv")
+x18 <- read.csv("Inputs/x18_Kite_diatoms.csv")
+x19a <- read.csv("Inputs/x19a_YAN_A_tephra_ages.csv") #airfall only - with T3a lower error extending to T3c
+x19b <- read.csv("Inputs/x19b_YAN_ARW_tephra_ages.csv") #airfall and reworked
+x19c <- read.csv("Inputs/x19c_Ant2018_tephra_ages.csv") #airfall and reworked
+
+# Published AP -regional - global data
+#x22 <- read.csv("Inputs/x22_WAIS_volcanic_flux.csv")
+x23 <- read.csv("Inputs/x23_JRI_ice_core.csv")
+x24 <- read.csv("Inputs/x24_Marcott2013_30_90S.csv")
+x25 <- read.csv("Inputs/x25_Kaufmann2020.csv")
+x26 <- read.csv("Inputs/x26_Miliken2009.csv")
+x27 <- read.csv("Inputs/x28_Etourneaux2013_SST.csv")
+x28 <- read.csv("Inputs/x27_Shevenell_TEX86.csv")
+x29 <- read.csv("Inputs/x29_Roberts2017_WAP_diatoms.csv")
+
+# Mechanisms
+x30 <- read.csv("Inputs/x30_Laskar2004_InsAnomaly_62S.csv")
+x31 <- read.csv("Inputs/x31_Baggenstos2019_Irradiance.csv")
+x32 <- read.csv("Inputs/x32_Saunders2018_SPECIM.csv")
+x33 <- read.csv("Inputs/x33_Saunders2018_DCond.csv")
+x34 <- read.csv("Inputs/x34_Moreno2018_SAM.csv")
+x35 <- read.csv("Inputs/x35_Vol_flux_WAIS.csv")
+
+# Figure 5 ----------------------------------------------------------------
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch <- 3.149608
+b <- ((8.27-plotinch)/2)-1
+checksize <- b*2+plotinch+2
+
+## FINAL PLOT TO PDF
+pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
+layout(matrix(1:6, ncol=1)) # Set up layout
+par(mai=c(0.1,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch, plotinch/2.5), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
+
+# PLOT TO SCREEN FIRST
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+layout(matrix(1:6, ncol=1)) # Set up layout
+par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2.5),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# A) KGI: max. age constraint phases for glacier readvance  [this study, HB et al., sub & Hall, 2007]
+x8 <- read.csv("Inputs/x8_Advance_KGI.csv")
+#xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+#xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80)) #final plot
+
+p8 <- plot(xDens8, main="KGI: constraints on glacier readvance",
+           xlab="Age [a BP]", 
+           xlim = c(-100, 12000), cex.main = 1,
+           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"), xaxt="n") #supress x-axis
+par(new = TRUE) #hold the plot frame
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+            axis(2, seq(0,0.012,0.002), tck=-0.04),
+            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))
+
+# Moss ages - to add
+
+# B) Kiteschee Lake diatom plots
+# DCCA 
+x18a <- na.omit(x18)
+p18 <- plot(DCCA1~Age_Sh20, data = x18a, pch = 21, type = "l", col="black", bg="black", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(2, 0),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new=TRUE)
+plot(DCCA1~Age_Sh20, data = x18a, pch = 21, col="black", bg="black", 
+     cex= 0.75, xlim = c(-100, 12000), ylim = c(2, 0),
+     frame=FALSE, ylab="DCCA Score", xlab="", xaxt="n", ann=FALSE)
+
+# Gomph. sp.  
+p18 <- plot(Gomphonema~Age_Sh20, data = x18, pch = 21, type = "l", col="black", bg="black", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(40, 0),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new=TRUE)
+plot(Gomphonema~Age_Sh20, data = x18, pch = 21, col="black", bg="black", 
+     cex= 0.75, xlim = c(-100, 12000), ylim = c(40, 0),
+     frame=FALSE, ylab="DCCA Score", xlab="", xaxt="n", ann=FALSE)
+
+# C) Yanou GDGT and tephra plots
+
+p17a <- plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, type = "l", col="grey", bg="grey", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new=TRUE)
+plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, col="grey", bg="grey",
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab=NULL, xlab="", xaxt="n", ann=FALSE)
+
+par(new=TRUE)
+p17b <- plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, type = "l", col="black", bg="black", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new=TRUE)
+plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, col="black", bg="black", 
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab="Temp. anomaly", xlab="", xaxt="n", ann=FALSE)
+
+par(new=TRUE)
+# plot Yanou tephra ages with simple error bars
+p19 <- plot(plot_y~Mean_age,data=x19c, pch = 21, col="black", bg="black", 
+     cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+par(new=TRUE)
+#p_axis <- c(axis(1, labels = FALSE))
+arrows(x0=x19c$Mean_age-x19c$Lower_err,
+       y0=x19c$plot_y,
+       x1=x19c$Mean_age+x19c$Upper_err,
+       y1=x19c$plot_y,
+       angle=90,
+       code=3,
+       length=0,
+       col = "grey",
+       lwd=2)
+par(new=TRUE)
+plot(plot_y~Mean_age,data=x19a, pch = 19, col="black", 
+     cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16), xaxt="n", 
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+arrows(x0=x19a$Mean_age-x19a$Lower_err,
+       y0=x19a$plot_y,
+       x1=x19a$Mean_age+x19a$Upper_err,
+       y1=x19a$plot_y,
+       angle=90,
+       code=3,
+       length=0,
+       col = "grey",
+       lwd=2)
+par(new=TRUE)
+plot(plot_y~Mean_age,data=x19a, pch = 21, col="black", bg="white", 
+     cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+
+# E) JRI Advance & retreat
 p20 <- plot(xDens20, main="JRI Advance (Kaplan et al. 2020)",
             xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.8,
             tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
@@ -1430,21 +1534,24 @@ p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,100),l
             axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
 par(new = FALSE) #remove hold on the plot frame to add median values
 
+# F) JRI ice core record 
+
+
 
 # Volcanism - check plot only for Figure 7 - not included in revised version  
-par(pin=c(plotinch, plotinch/4),  mgp=c(2,0.5,0), xaxs='i') 
-p22 <- plot(x22, type = "l", lty = 1,  main="WASI Divide volcanic Event Flux",
-            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
-            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p22 <- plot(x22, type ="p", pch =20, cex=0.5,  main="WASI Divide volcanic Event Flux",
-            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
-            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,200,50), tck=-0.04),
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
+#par(pin=c(plotinch, plotinch/4),  mgp=c(2,0.5,0), xaxs='i') 
+#p22 <- plot(x22, type = "l", lty = 1,  main="WASI Divide volcanic Event Flux",
+#            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
+#            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+#par(new = TRUE) #hold the plot frame to add median values
+#p22 <- plot(x22, type ="p", pch =20, cex=0.5,  main="WASI Divide volcanic Event Flux",
+#            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
+#            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+#            axis(2, seq(0,200,50), tck=-0.04),
+#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
 #axis(4, seq(0,0.008,0.002), labels=rep("",5), tck=0.04))
-text(500, 160, "-", font = 2, cex = 1.5,  family = 'sans') 
+#text(500, 160, "-", font = 2, cex = 1.5,  family = 'sans') 
 
 
 
@@ -1523,7 +1630,7 @@ dev.off() #need to include this to write to pdf file fully - will delete screen 
 #            axis(4, seq(0,0.03,0.001), labels=rep("",31), tck=0.02))
 #par(new = FALSE) #remove hold on the plot frame to add median values
 
-# Figure 10D  -------------------------------------------------------------
+# Figure 10D  mechanisms plot to 18 ka -------------------------------------------------------------
 
 # Clear plots
 if(!is.null(dev.list())) dev.off()
@@ -1657,10 +1764,10 @@ par(new = FALSE) #remove hold on the plot frame to add median values
 
 # KGI early Holocene deglaiation constraints -  new cosmo ages to secondary axis of altitude
 par(new=TRUE)
-x <- x17$ages
+x <- x9.4$ages
 #y <- c(0.004, 0.005, 0.006)
-y <- x17$altitude
-x.err <- x17$ageSds
+y <- x9.4$altitude
+x.err <- x9.4$ageSds
 #arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
 #points(x, y, pch = 21, col= "black", bg = "red", cex=2)
 plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
@@ -1682,6 +1789,33 @@ par(new = FALSE) #remove hold on the plot frame to add median values
 #++++++++++++++++++++++++++++++++++++++++++++++++++++ END +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # ++++++++++++++++ SOME OTHER USEFUL CODE AND STUFF ++++++++++++++ --------
+
+# Convert a to ka if needed
+x19a <- read.csv("Inputs/x19a_YAN_A_tephra_ages.csv") #airfall only - with T3a lower error extending to T3c
+Uage <- c('Upper_95CI_age')
+age <- c('Mean_age')  ## create vector of column names to recaluculate as cal ka BP
+Uerr <- c('Upper_err')
+Lerr <- c('Lower_err')
+x19a[Uage]<- x19a[Uage]/10^3
+x19a[age] <- x19a[age]/10^3
+x19a[Uerr] <- x19a[Uerr]/10^3
+x19a[Lerr] <- x19a[Lerr]/10^3
+x19a
+x19b <- read.csv("Inputs/x19b_YAN_ARW_tephra_ages.csv") #airfall and reworked
+x19b[Uage]<- x19b[Uage]/10^3
+x19b[age] <- x19b[age]/10^3
+x19b[Uerr] <- x19b[Uerr]/10^3
+x19b[Lerr] <- x19b[Lerr]/10^3
+x19b
+x19c <- read.csv("Inputs/x19c_Ant2018_tephra_ages.csv") #airfall and reworked
+x19c[Uage]<- x19c[Uage]/10^3
+x19c[age] <- x19c[age]/10^3
+x19c[Uerr] <- x19c[Uerr]/10^3
+x19c[Lerr] <- x19c[Lerr]/10^3
+x19c
+
+x19b <- read.csv("Inputs/x19b_YAN_ARW_tephra_ages.csv") #airfall and reworked
+x19c <- read.csv("Inputs/x19c_Ant2018_tephra_ages.csv") #airfall and reworked
 
 # STANDARD PLOTTING SIZE
 
