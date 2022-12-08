@@ -1,6 +1,4 @@
 ﻿id,ages,ageSds,position,thickness,calCurves,LabID,altitude
-BP_Bedrock_1,15443,2500,265,1,normal,BP-3,265
-BP_Bedrock_2,11843,2300,165,1,normal,BP-2,165
 BP_Lake 6,7934,43,39,1,normal,Beta-335036,39
 FP_Jurasee,9751,385,47,1,normal,HD11166-11024,47
 FP_Mondsee,8006,239,45,1,normal,HD11415-11133,45

@@ -52,7 +52,7 @@ getwd()
 # Read the SSI database & rearrange in base R --------
 SSI_df <- read.csv("SSI_db.csv")
 
-# Subset datasets - run first time only -------------------------------------------------------
+# Datasets for density phase analysis from SSI_df- run first time only -------------------------------------------------------
 
 # x2 - Fildes paper - new Artigas Beach C14 data - this study
 ART_Terr20_0 <- subset(SSI_df, SiteName == "Artigas_Beach_Moraine" & calCurves == "shcal20", 
@@ -112,6 +112,8 @@ x4 <- ART_Hall_Mar20666
 
 # Read in csv input files - fast start  -----------------------------------------
 
+# Datasets for desnity phase analysis - fast start
+
 # Fildes paper - new Artigas Beach C14 data - this study
 x2 <- read.csv("Inputs/x2_ART_Terr20.csv")
 
@@ -130,31 +132,32 @@ x8 <- read.csv("Inputs/x8_Advance_KGI.csv")
 x9 <- read.csv("Inputs/x9_Retreat_KGI.csv")
 x10 <- read.csv("Inputs/x10_Retreat_SSI.csv")
 x15 <- read.csv("Inputs/x15_Lakes_basal_Fildes.csv")
-x9.4 <- read.csv("Inputs/x9.4_Retreat_KGI_earlyHolocene.csv")
+x9.4 <- read.csv("Inputs/x9.4_Retreat_KGI_earlyHolocene_cosmo.csv")
+x9.5 <- read.csv("Inputs/x9.5_Retreat_KGI_earlyHolocene_lakes.csv")
 
 # Retreat - cosmogenic min age constraints
 x13 <- read.csv("Inputs/x13_Cosmo_Fildes.csv")
 v <- c('ages')  ## create vector of column names to recaluculate as cal ka BP
-x13[v] <- x13[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x13[v] <- x13[v] - (2010-1950)  # convert to BP by subtracting 1950 from samples collection date and assign back
 x13.1 <- read.csv("Inputs/x13.1_Cosmo_Potter.csv")
-x13.1[v] <- x13.1[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x13.1[v] <- x13.1[v] - (2010-1950) # convert to BP
 x14 <- read.csv("Inputs/x14_Cosmo_KGI.csv")
-x14[v] <- x14[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x14[v] <- x14[v] - (2010-1950) # convert to BP
 
 # Warm conditions similar to present - Sub-aquatic moss & GDGT Temp - & tephra layers
-x5 <- read.csv("Inputs/x5_Aq_moss_Fildes.csv")
+x5 <- read.csv("Inputs/x5_Aq_moss_Fildes.csv") #without post-bomb ages
 x5 <- subset(x5, calCurves=="shcal20", 
              select=c(id:altitude)) # remove post-bomb (normal) ages for density phase analysis as prob density not comparable to sh20 data & post-bomb data can't be calibrated in BChron and RCarbon
 x11 <- read.csv("Inputs/x11_Aq_Moss_KGI.csv")
 x12 <- read.csv("Inputs/x12_Aq_Moss_SSI.csv")
-x16 <- read.csv("Inputs/x16_Aq_Moss_Fildes.csv")
+x16 <- read.csv("Inputs/x16_Aq_Moss_Fildes.csv") #includes post-bomb ages
 x17 <- read.csv("Inputs/x17_Yanou_GDGT.csv")
 
 # Published AP -regional - global data - density phase analysis
 x20 <- read.csv("Inputs/x20_Kaplan2020_JRI_Advance.csv")
-x20[v] <- x20[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x20[v] <- x20[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
 x21 <- read.csv("Inputs/x21_Kaplan2020_JRI_Retreat.csv")
-x21[v] <- x21[v] - (2010-1950)  ## subtract 1950 from samples collection date and assign back
+x21[v] <- x21[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
 
 # Calibration and density plotting --------------------------------------------------
 
@@ -208,7 +211,7 @@ xDens5 <- with(x5, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCur
 xDens11 <- with(x11, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20)) #final plot
 xDens12 <- with(x12, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80))
 xDens16 <- with(x16, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 50)) #final table
-xDens17a <- with(x17a, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final table
+xDens17 <- with(x17a, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 10)) #final table
 
 # Published AP data
 xAges20 <- with (x20, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
@@ -527,9 +530,9 @@ r5_C14summary <- describe_distribution(r5_cal_sum$CRA)
 r5_Calsummary  <- describe_distribution(r5_cal_sum$MedianBP)
 r5_C14summary
 r5_Calsummary 
-write.csv(r5_C14summary,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputss/r5_C14summary.csv", row.names = FALSE)
-write.csv(r5_Calsummary,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputss/r5_Calsummary.csv", row.names = FALSE)
-write.csv(r5_cal_sum,"/Users/Steve/Dropbox/BAS/Data/R/BChron/Data/Outputss/r5_cal_sum.csv", row.names = FALSE)
+write.csv(r5_C14summary,"/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data/Outputs/r5_C14summary.csv", row.names = FALSE)
+write.csv(r5_Calsummary,"/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data/Outputs/r5_Calsummary.csv", row.names = FALSE)
+write.csv(r5_cal_sum,"/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data/Outputs/r5_cal_sum.csv", row.names = FALSE)
 
 #++++++ Investigate subsets +++++++
 # Subsets of all dates that have a probability above 0.5 and are <6000 BP
@@ -657,7 +660,7 @@ write.csv(r5_spd$grid,"/Users/Steve/Dropbox/BAS/Data/R/RCarbon/r5_spd.csv", row.
 
 # Aquatic moss KGI - RCarbon - for SPD and KDE -------------------------
 
-r11 <- read.csv("Aq_moss_KGI_RCarbon.csv")
+r11 <- read.csv("Inputs/r11_Aq_moss_KGI_RCarbon.csv")
 head(r11)
 tail(r11)
 #pooled dates from the same event prior to calibration into a weighted mean and std err
@@ -973,7 +976,7 @@ write.csv(r15_spd$grid,"/Users/Steve/Dropbox/BAS/Data/R/RCarbon/r15_spd.csv", ro
 
 # Potter Advance constraints - RCarbon for SPD and KDE plots --------------------------
 
-r6 <- read.csv("Potter_Terr_Holocene.csv")
+r6 <- read.csv("Inputs/r6_Potter_Terr_Holocene.csv")
 head(r6)
 #pooled dates from the same event prior to calibration into a weighted mean and std err
 #to check for internal consistency before calibration
@@ -1131,12 +1134,10 @@ write.csv(r6_spd$grid,"/Users/Steve/Dropbox/BAS/Data/R/RCarbon/r6_spd.csv", row.
 
 
 
+
 # SECTION 3: Final plots for Fildes and Potter papers ---------------------------------------------------------------
 
 # FILDES PAPER ------------------------------------------------------------
-
-# Plotting set up - need to run this once at start ---------------------------------------------------------
-
 
 # Figure 3 ----------------------------------------------------------------
 
@@ -1152,23 +1153,22 @@ b <- ((8.27-plotinch)/2)-1
 checksize <- b*2+plotinch+2
 checksize #should = 8.27 inches A4 width
 
-
 ## FINAL PLOT TO PDF
 #mai / omi = margin in inches or mar / oma = margin in lines - order is bottom, left, top, right 
 #set up the page layout - A4 is 8.27 x 11.69 - closest to 
 pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
 layout(matrix(1:6, ncol=1)) # Set up layout
 #par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch, plotinch/2.5), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
+par(mai=c(0.1,0.1,0.1,0.1), omi=c(0,0,0,0), pin=c(plotinch, plotinch/3), mgp=c(2,1,0), xaxs='i') # Set up internal margins
 #xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
 
-#  PLOT TO SCREEN FIRST
+#  PLOT TO SCREEN
 # Clear plots
 if(!is.null(dev.list())) dev.off()
 # plot XDens output together for comparison
-layout(matrix(1:6, ncol=1)) # Set up layout
+layout(matrix(1:5, ncol=1)) # Set up layout
 #par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2.5),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch, plotinch/3),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
 # mai sets up internal margins around plot in inches
 # pin sets up the size of the plot in inches - here its 8 cm wide by 8/3 cm high
 # mgp sets: axis label distance from axis, tick labels from ticks, tick distance from the line
@@ -1178,8 +1178,13 @@ par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2.5),  mgp=c(2,0.5,0), x
 # text(7, 4, expression(bar(x) == sum(frac(x[i], n), i==1, n))) - or expression(hat(beta) == (X^t * X)^{-1} * X^t * y) 
 # for text: font = 2 is bold, 3 is italic, 4 is bold italic
 
-
 # Figure 3A) Artigas Terrestrial Moss in Moraines (shcal20) [this study]
+
+# Advance - max age constraints
+xAges2 <- with (x2, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, 
+                                    calCurves = calCurves, allowOutside = TRUE))
+xDens2 <- with(ART_Terr20, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, 
+                                         numMix = 10))
 p2 <- plot(xDens2, main="Artigas Beach: terrestrial moss in moraines",
            #xlab="Age [a BP]", 
            xlim = c(-100, 4000), cex.main = 1,
@@ -1193,6 +1198,10 @@ text(100, 0.0065, "A", font = 2, cex = 1.5,  family = 'sans')
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 # B) Artigas-Valle Norte-Valle Klotz Terrestrial Moss in Moraines (shcal20) [this study & Hall, 2007]
+xAges2.1 <- with (x2.1, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, 
+                                        calCurves = calCurves, allowOutside = TRUE))
+xDens2.1 <- with(x2.1, BchronDensity(ages = ages,ageSds = ageSds,calCurves = calCurves, 
+                                     numMix = 100))
 p2.1 <- plot(xDens2.1, main="Artigas-Valle Norte-Valle Klotz terrestrial moss in moraines",
              #xlab="Age [a BP]", 
              xlim = c(-100, 4000),  cex.main = 1,
@@ -1206,6 +1215,10 @@ text(100, 0.008, "B", font = 2, cex = 1.5,  family = 'sans')
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 # C) Fildes Peninsula: max. age constraints on glacier (re)advance  [this study, Hall, 2007, Watcham et al., 2011]
+xAges7 <- with (x7, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, 
+                                    calCurves = calCurves, allowOutside = TRUE))
+xDens7 <- with(x7, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+                                 numMix = 50))
 p7 <- plot(xDens7, main="Fildes Peninsula: constraints on glacier readvance",
            #xlab="Age [a BP]", 
            xlim = c(-100, 8000), cex.main = 1,
@@ -1236,6 +1249,10 @@ mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
 par(new = FALSE) #remove hold on the plot frame to add median values
 
 # D) KGI: max. age constraint phases for glacier readvance  [this study, HB et al., sub & Hall, 2007]
+xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, 
+                                    calCurves = calCurves, allowOutside = TRUE))
+xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+                                 numMix = 80))
 p8 <- plot(xDens8, main="KGI: constraints on glacier readvance",
            #xlab="Age [a BP]", 
            xlim = c(-100, 12000), cex.main = 1,
@@ -1285,8 +1302,12 @@ mtext("Altitude (m a.s.l.)", side=4, line=2, col = "red", cex = 0.75)
 #par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
 #xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
 
-# E) Lakes Fildes - basal ages - deglaciation plot 
+# E1) Lakes Fildes - basal ages - deglaciation plot 
 #par(pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i') 
+xAges15 <- with (x15, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, 
+                                      calCurves = calCurves, allowOutside = TRUE))
+xDens15 <- with(x15, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+                                   numMix = 20))
 p15 <- plot(xDens15, main="Fildes lakes: basal ages & aquatic moss layers ",
             xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
             tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
@@ -1298,113 +1319,159 @@ p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labe
 text(11500, 0.0065, "E", font = 2, cex = 1.5,  family = 'sans') 
 
 
-#Lakes - Fildes - aquatic moss ages 
+# E2) RCarbon SPD Aquatic Moss stacked plot -----------------------------------------------------------
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+# plot XDens output together for comparison
+layout(matrix(1:2, ncol=1)) # Set up layout
+#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
+par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+
+r5 <- read.csv("Inputs/r5_Aq_moss_Fildes_RCarbon.csv")
+r5_cal <- calibrate(r5$CRA, r5$Error, normalised=TRUE, calCurves=r5$calCurves,
+                    resOffsets=r5$resOffsets,resErrors=r5$resErrors,ids=r5$LabID) #Calibration
+r5_res = stackspd(x=r5_cal,timeRange=r5_timeRange,bins=r5_bins,group=r5$SiteName) #Stack SPD plot
+plot(r5_res,type='stacked', xlab="",ylab="", xlim = r5_revtimeRange, legend = TRUE, xaxt = "n",yaxt = "n",
+     legend.arg = NULL, axes = FALSE, main = "", tck=0)
+p_axis <- c(axis(1, seq(0,12000,2000), tck=0), axis(1, seq(0,12000,2000),labels=rep("",7), tck=-0.02),
+            axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.01, xlim=c(-100,12000), col = "black", col.lab = "black", col.axis = "black"),
+            axis(4, seq(0,0.06,0.01), tck=-0.02, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black"),
+            axis(4, seq(0,0.06,0.01),labels=rep("",7), tck=-0.01, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black"))
+mtext("Summed probability", side=4, line=2, col = "black")
+
+# Fildes aquatic moss 2sigma age-range bars at base 
+x16b <- read.csv("Inputs/x16b_Aq_Moss_Fildes_Outer_calibrated.csv")
+p16b <- plot(plot_y~MedianBP,data=x16b, pch = 3, col="#006400", 
+             cex = 0.75, xlim = c(-100, 12000), ylim = c(2, -1),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+par(new=TRUE)
+#p_axis <- c(axis(1, labels = FALSE))
+arrows(x0=x16b$MedianBP-x16b$TwoSigma_BP_lower,
+       y0=x16b$plot_y,
+       x1=x16b$MedianBP+x16b$TwoSigma_BP_upper,
+       y1=x16b$plot_y,
+       angle=90,
+       code=3,
+       length=0,
+       col = "#006400",
+       lwd=3)
+par(new=TRUE)
+p16b <- plot(plot_y~MedianBP,data=x16b, pch = 3, col="#006400", 
+             cex = 0.75, xlim = c(-100, 12000), ylim = c(2, -1),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+
+# Aq Moss Layers -  KGI - RCarbon plot -----------------------------------
+
+
+#plot(r11_res,type='stacked', xlab="",ylab="", xlim = r11_revtimeRange, legend = TRUE, xaxt = "n",yaxt = "n",
+#     legend.arg = NULL, axes = FALSE, main = "", tck=0)  #most useful for summaries of multiple sites / types
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=0), axis(1, seq(0,12000,500),labels=rep("",25), tck=0),
+#            axis(2, seq(0,0.008,0.002), tck=0, labels=rep("",5)))
+#par(new=TRUE)
+#axis(4,  seq(0,0.06,0.02), tck=-0.04, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
+#axis(4, seq(0,0.06,0.01),labels=rep("",7), tck=-0.02, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
+#mtext("Summed probability", side=4, line=2, col = "black", cex = 0.75)
+
+
+
+# or Fildes - aquatic moss - without post-bomb - desnity ph --------
+
 #par(pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i') 
-p5 <- plot(xDens11, main="Fildes lakes: aquatic moss layers ",
-           xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
-           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.008,0.002), tck=-0.04),
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
+#p5 <- plot(xDens5, main="Fildes lakes: aquatic moss layers ",
+#           xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
+#           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+#par(new = TRUE) #hold the plot frame to add median values
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+#            axis(2, seq(0,0.008,0.002), tck=-0.04),
+#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
 #axis(4, seq(0,0.008,0.002), labels=rep("",5), tck=0.04))
-text(11500, 0.0065, "F", font = 2, cex = 1.5,  family = 'sans') 
-
+#text(11500, 0.0065, "F", font = 2, cex = 1.5,  family = 'sans') 
+#par(new = TRUE) #hold the plot frame to add median values
 # add post bomb ages as horizontal black dashes
-par(new = TRUE)
+#par(new = TRUE)
 
 # subset Fildes aquatic moss data to select only post-bomb ages 
-Fildes_AM_postbomb <- subset(x5, calCurves=="normal", 
-                                      select=c(id, ages, ageSds, LabID))
+#Fildes_AM_postbomb <- subset(x5, calCurves=="normal", 
+#                                      select=c(id, ages, ageSds, LabID))
+# or Fildes - aquatic moss - with post-bomb -----------------------------------------------
 
-# OR
+#par(pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i') 
+#p16 <- plot(xDens16, main="Fildes Aquatic Moss",
+#            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
+#            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+#par(new = TRUE) #hold the plot frame to add median values
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+#            #axis(2, seq(0,0.01,0.002), tck=-0.04),
+#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
+#            axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
+#text(11250, 0.006, "F", font = 2, cex = 1.5,  family = 'sans') 
+#par(new = FALSE) #remove hold on the plot frame to add median values
 
-#Lakes - KGI - aquatic moss ages 
-par(pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i') 
-p11 <- plot(xDens11, main="Fildes lakes: aquatic moss layers ",
-           xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
-           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.008,0.002), tck=-0.04),
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
+# or KGI aquatic moss ages -----------------------------------------------
+
+#par(pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i') 
+#p11 <- plot(xDens11, main="Fildes lakes: aquatic moss layers ",
+#           xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
+#           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
+#par(new = TRUE) #hold the plot frame to add median values
+#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+#            axis(2, seq(0,0.008,0.002), tck=-0.04),
+#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))#,
 #axis(4, seq(0,0.008,0.002), labels=rep("",5), tck=0.04))
-text(11500, 0.0065, "F", font = 2, cex = 1.5,  family = 'sans') 
+#text(11500, 0.0065, "F", font = 2, cex = 1.5,  family = 'sans') 
 
 # add post bomb ages as horizontal black dashes
-par(new = TRUE)
+#par(new = TRUE)
 
 # subset Fildes aquatic moss data to select only post-bomb ages 
-KGI_AM_postbomb <- subset(x11, calCurves=="normal", 
-                            select=c(id, ages, ageSds, LabID))
+#KGI_AM_postbomb <- subset(x11, calCurves=="normal", 
+#                           select=c(id, ages, ageSds, LabID))
 
 # Run this when writing to pdf rather than screen
-dev.off() #need to include this to write to pdf file fully - will delete screen plot
+#dev.off() #need to include this to write to pdf file fully - will delete screen plot
 
 
-# RCarbon plots -----------------------------------------------------------
-
-#Aq Moss Layers -  Fildes -RCarbon plot
-plot(r5_res,type='stacked', xlab="",ylab="", xlim = r5_revtimeRange, legend = TRUE, xaxt = "n",yaxt = "n",
-     legend.arg = NULL, axes = FALSE, main = "", tck=0)  #most useful for summaries of multiple sites / types
-p_axis <- c(axis(1, seq(0,12000,2000), tck=0), axis(1, seq(0,12000,500),labels=rep("",25), tck=0),
-            axis(2, seq(0,0.008,0.002), tck=0, labels=rep("",5)))
-par(new=TRUE)
-axis(4,  seq(0,0.06,0.02), tck=-0.04, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
-axis(4, seq(0,0.06,0.01),labels=rep("",7), tck=-0.02, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
-mtext("Summed probability", side=4, line=2, col = "black", cex = 0.75)
-
-#Aq Moss Layers -  KGI - RCarbon plot
-plot(r11_res,type='stacked', xlab="",ylab="", xlim = r11_revtimeRange, legend = TRUE, xaxt = "n",yaxt = "n",
-     legend.arg = NULL, axes = FALSE, main = "", tck=0)  #most useful for summaries of multiple sites / types
-p_axis <- c(axis(1, seq(0,12000,2000), tck=0), axis(1, seq(0,12000,500),labels=rep("",25), tck=0),
-            axis(2, seq(0,0.008,0.002), tck=0, labels=rep("",5)))
-par(new=TRUE)
-axis(4,  seq(0,0.06,0.02), tck=-0.04, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
-axis(4, seq(0,0.06,0.01),labels=rep("",7), tck=-0.02, ylim=c(0,0.06), col = "black", col.lab = "black", col.axis = "black")
-mtext("Summed probability", side=4, line=2, col = "black", cex = 0.75)
-
-#++++++++++++++ DON'T ADD TO FINAL PLOTS  ++++++++++
-p16 <- plot(xDens11, main="Fildes Aquatic Moss",
-            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
-            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            #axis(2, seq(0,0.01,0.002), tck=-0.04),
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
-            axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
-text(11250, 0.006, "F", font = 2, cex = 1.5,  family = 'sans') 
-par(new = FALSE) #remove hold on the plot frame to add median values
 
 
-# Figures 5 & 7 Fildes Paper datasets  ---------------------------------------------------
 
-# Plotting data for figures
+
+
+# Figure 5 ----------------------------------------------------------------
+
+library(Bchron)
+#set working directory on mac
+setwd("/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data")
+
+# New Data
+x8 <- read.csv("Inputs/x8_Advance_KGI.csv") # run density phase analysis once
+# run once at start
+xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,
+                                    positions = position, calCurves = calCurves, allowOutside = TRUE))
+xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+                                 numMix = 80))
+x16a <- read.csv("Inputs/x16a_Aq_Moss_Fildes_calibrated.csv")
+x16b <- read.csv("Inputs/x16b_Aq_Moss_Fildes_Outer_calibrated.csv")
 x17 <- read.csv("Inputs/x17_Yanou_GDGT.csv")
 x18 <- read.csv("Inputs/x18_Kite_diatoms.csv")
 x19a <- read.csv("Inputs/x19a_YAN_A_tephra_ages.csv") #airfall only - with T3a lower error extending to T3c
 x19b <- read.csv("Inputs/x19b_YAN_ARW_tephra_ages.csv") #airfall and reworked
 x19c <- read.csv("Inputs/x19c_Ant2018_tephra_ages.csv") #airfall and reworked
 
-# Published AP -regional - global data
-#x22 <- read.csv("Inputs/x22_WAIS_volcanic_flux.csv")
+# Published AP regional & global data
+x20 <- read.csv("Inputs/x20_Kaplan2020_JRI_Advance.csv")
+x20[v] <- x20[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
+xAges20 <- with (x20, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xDens20 <- with(x20, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30))
+x21 <- read.csv("Inputs/x21_Kaplan2020_JRI_Retreat.csv")
+x21[v] <- x21[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
+xAges21 <- with (x21, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20))
 x23 <- read.csv("Inputs/x23_JRI_ice_core.csv")
 x24 <- read.csv("Inputs/x24_Marcott2013_30_90S.csv")
 x25 <- read.csv("Inputs/x25_Kaufmann2020.csv")
 x26 <- read.csv("Inputs/x26_Miliken2009.csv")
-x27 <- read.csv("Inputs/x28_Etourneaux2013_SST.csv")
-x28 <- read.csv("Inputs/x27_Shevenell_TEX86.csv")
-x29 <- read.csv("Inputs/x29_Roberts2017_WAP_diatoms.csv")
-
-# Mechanisms
-x30 <- read.csv("Inputs/x30_Laskar2004_InsAnomaly_62S.csv")
-x31 <- read.csv("Inputs/x31_Baggenstos2019_Irradiance.csv")
-x32 <- read.csv("Inputs/x32_Saunders2018_SPECIM.csv")
-x33 <- read.csv("Inputs/x33_Saunders2018_DCond.csv")
-x34 <- read.csv("Inputs/x34_Moreno2018_SAM.csv")
 x35 <- read.csv("Inputs/x35_Vol_flux_WAIS.csv")
-
-# Figure 5 ----------------------------------------------------------------
 
 # Clear plots
 if(!is.null(dev.list())) dev.off()
@@ -1414,76 +1481,106 @@ b <- ((8.27-plotinch)/2)-1
 checksize <- b*2+plotinch+2
 
 ## FINAL PLOT TO PDF
-pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
-layout(matrix(1:6, ncol=1)) # Set up layout
-par(mai=c(0.1,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch, plotinch/2.5), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
+#pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
+#layout(matrix(1:8, ncol=1)) # Set up layout
+#par(mai=c(0.01,0.01,0.01,0.01), omi=c(0,0,0,0), pin=c(plotinch, plotinch/4), mgp=c(2,1,0), xaxs='i') # Set up internal margins
 
-# PLOT TO SCREEN FIRST
+# PLOT TO SCREEN
 # Clear plots
 if(!is.null(dev.list())) dev.off()
-layout(matrix(1:6, ncol=1)) # Set up layout
-par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2.5),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+layout(matrix(1:8, ncol=1)) # Set up layout
+par(mai=c(0.01,0.01,0.01,0.01), pin=c(plotinch, plotinch/4),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
 
 # A) KGI: max. age constraint phases for glacier readvance  [this study, HB et al., sub & Hall, 2007]
-x8 <- read.csv("Inputs/x8_Advance_KGI.csv")
-#xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
-#xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 80)) #final plot
-
-p8 <- plot(xDens8, main="KGI: constraints on glacier readvance",
-           xlab="Age [a BP]", 
-           xlim = c(-100, 12000), cex.main = 1,
-           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"), xaxt="n") #supress x-axis
+p8 <- plot(xDens8, xlab="", xlim = c(-100, 12000), cex.main = 1, las = 0, axes = FALSE,
+           tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL), 
+           xaxt="n", yaxt="n", ann=FALSE) #supress x-axis
 par(new = TRUE) #hold the plot frame
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.012,0.002), tck=-0.04),
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02))
-
-# Moss ages - to add
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
+            axis(2, seq(0,0.012,0.002), tck=-0.08, las = 1, line = 1)#,
+            #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02)
+            )
+mtext("Density", side = 2, cex = 0.75, line = 5)
+#par(new = FALSE) #remove hold
 
 # B) Kiteschee Lake diatom plots
-# DCCA 
+# DCCA plot
 x18a <- na.omit(x18)
 p18 <- plot(DCCA1~Age_Sh20, data = x18a, pch = 21, type = "l", col="black", bg="black", 
-            cex= 1, xlim = c(-100, 12000), ylim = c(2, 0),
+            cex= 1, xlim = c(-100, 12000), ylim = c(2, -0.8),
             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
 par(new=TRUE)
 plot(DCCA1~Age_Sh20, data = x18a, pch = 21, col="black", bg="black", 
-     cex= 0.75, xlim = c(-100, 12000), ylim = c(2, 0),
-     frame=FALSE, ylab="DCCA Score", xlab="", xaxt="n", ann=FALSE)
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(2, -0.8), tck=-0.08,
+     frame=FALSE, xlab="", ylab="", xaxt="n", ann=TRUE, las = 1, line = 1)
+mtext("DCCA score", side = 2, cex = 0.75, line = 5)
 
-# Gomph. sp.  
+# Add Moss ages - Fildes outer min-max calibrated ranges 
+par(new=TRUE)
+p16b <- plot(plot_y~MedianBP,data=x16b, pch = 3, col="#006400", 
+             cex = 0.75, xlim = c(-100, 12000), ylim = c(2, -1), tck=-0.08,
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+par(new=TRUE)
+#p_axis <- c(axis(1, labels = FALSE))
+arrows(x0=x16b$MedianBP-x16b$TwoSigma_BP_lower,
+       y0=x16b$plot_y,
+       x1=x16b$MedianBP+x16b$TwoSigma_BP_upper,
+       y1=x16b$plot_y,
+       angle=90,
+       code=3,
+       length=0,
+       col = "#006400",
+       lwd=3)
+par(new=TRUE)
+p16b <- plot(plot_y~MedianBP,data=x16b, pch = 3, col="#006400", 
+             cex = 0.75, xlim = c(-100, 12000), ylim = c(2, -1),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+# Gomph. sp. plot  
 p18 <- plot(Gomphonema~Age_Sh20, data = x18, pch = 21, type = "l", col="black", bg="black", 
             cex= 1, xlim = c(-100, 12000), ylim = c(40, 0),
             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
 par(new=TRUE)
 plot(Gomphonema~Age_Sh20, data = x18, pch = 21, col="black", bg="black", 
      cex= 0.75, xlim = c(-100, 12000), ylim = c(40, 0),
-     frame=FALSE, ylab="DCCA Score", xlab="", xaxt="n", ann=FALSE)
+     frame=FALSE, xlab="", ylab="", xaxt="n", ann=TRUE, las = 1, line = 1)
+mtext("Gomph. sp.", side = 2, cex = 0.75, line = 5)
 
 # C) Yanou GDGT and tephra plots
-
-p17a <- plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, type = "l", col="grey", bg="grey", 
-            cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
-            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
-par(new=TRUE)
-plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, col="grey", bg="grey",
-     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
-     frame=FALSE, ylab=NULL, xlab="", xaxt="n", ann=FALSE)
-
-par(new=TRUE)
-p17b <- plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, type = "l", col="black", bg="black", 
+p17a <- plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, type = "l", col="#D19C9C", bg="#D19C9C", 
              cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
              frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$mean_ANT_anomaly~age1, data = x17, 
+      lty="dotted", col="#D19C9C", lwd=0.75) # add average median temp for 90-60S
 par(new=TRUE)
-plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, col="black", bg="black", 
+plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, col="#D19C9C", bg="#D19C9C",
      cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
-     frame=FALSE, ylab="Temp. anomaly", xlab="", xaxt="n", ann=FALSE)
-
+     frame=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$RMSE_Max_anomaly~Age_Sh20, data = x17, 
+      lty=1, col="grey", lwd=0.75) # add upper 95% CI error bounds
+lines(x17$RMSE_min_anomaly~Age_Sh20, data = x17,
+      lty=1, col="grey", lwd=0.75) # add lower 95% CI error bounds
 par(new=TRUE)
-# plot Yanou tephra ages with simple error bars
+p17b <- plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, type = "l", col="#800000", bg="#800000", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$mean_ANT_GLOBAL_anomaly~age1, data = x17, 
+      lty="dotted", col="#800000", lwd=0.75) # add global data as a black line
+par(new=TRUE)
+plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, col="#800000", bg="#800000", 
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab="Temp. anomaly", xaxt="n", yaxt="n", ann=FALSE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.08, line = 1), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  axis(2, seq(-5,16,5),  tck=-0.08, las = 1, line = 1, col = "#800000", col.axis = "#800000")
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(100,12000,500),labels=rep("",25), tck=0.02),
+  #axis(4, seq(-5,16,5), tck=0.04), las = 1)
+)
+mtext("Temp. Anomaly 
+      (deg. C)", side = 2, cex = 0.75, line = 4, adj=-0.1, col = "#C80000")
+#Add Yanou tephra ages with  error bars
+par(new=TRUE)
 p19 <- plot(plot_y~Mean_age,data=x19c, pch = 21, col="black", bg="black", 
      cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16),
-     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE) #xaxt="n", yaxt="n" to remove x and y axis
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE, xpd = 1) #xaxt="n", yaxt="n" to remove x and y axis
 par(new=TRUE)
 #p_axis <- c(axis(1, labels = FALSE))
 arrows(x0=x19c$Mean_age-x19c$Lower_err,
@@ -1498,7 +1595,7 @@ arrows(x0=x19c$Mean_age-x19c$Lower_err,
 par(new=TRUE)
 plot(plot_y~Mean_age,data=x19a, pch = 19, col="black", 
      cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16), xaxt="n", 
-     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE, xpd = 1) # xpd = 1 plots over margins 
 arrows(x0=x19a$Mean_age-x19a$Lower_err,
        y0=x19a$plot_y,
        x1=x19a$Mean_age+x19a$Upper_err,
@@ -1511,40 +1608,132 @@ arrows(x0=x19a$Mean_age-x19a$Lower_err,
 par(new=TRUE)
 plot(plot_y~Mean_age,data=x19a, pch = 21, col="black", bg="white", 
      cex= plot_cex, xlim = c(-100, 12000), ylim = c(-5, 16),
-     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+     frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE, xpd = 1)
+#par(new = FALSE) #remove hold
 
-# E) JRI Advance & retreat
-p20 <- plot(xDens20, main="JRI Advance (Kaplan et al. 2020)",
-            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.8,
-            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,100),labels=rep("",122), tck=-0.02),
-            axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
-            axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
-par(new = FALSE) #remove hold on the plot frame to add median values
+# C2) Miliken sea-ice record
+p26 <- plot(TOC_pc~Age_BP, data = x26, pch = 21, type = "l", col="#B9C7F0", bg="#B9C7F0", 
+            cex= 1, xlim = c(-100, 12000), ylim = rev(range(TOC_pc)),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x26$mean_6ka~age1, data = x26, 
+      lty="dotted", col="black", lwd=0.75) # add average median temp for 90-60S
+par(new=TRUE)
+plot(TOC_pc~Age_BP, data = x26, pch = 21, col="#B9C7F0", bg="#B9C7F0",
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(0.6, 0),
+     frame=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+par(new = TRUE)
+# set up and plot 100-yr  LOESS
+# see https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/loess for details
+# locally weighted sum of squares, 2nd order polynomial, Gaussian fit 
+# span α<1 determined by the time interval of the whole dataset and tri-cubic weighting proportional to (1-(distance/max. distance)3)3
+# Ref: W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models. Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie, Wadsworth & Brooks/Cole.
+output_int_yrs = 1000 #enter the final output interval, e.g., 100 year LOESS output = 1000/12100
+age_range = 10000-(-100) # enter the age range 
+alpha26 <- output_int_yrs/age_range #calculate the span value
+lw26 <- loess(TOC_pc~Age_BP, 
+              data = x26,
+              span = alpha26,
+              degree = 2,
+              family = "gaussian")
+x26_count <- seq(from=-100, to=10000, by=1) # set up count fro 0-10 ka
+x26_count_rev <- order(x26_count, decreasing=TRUE)
+x26_pred <- predict(lw26, x26_count, se=TRUE) # Fit the LOESS
+lines(x26_pred$fit, lty="solid", col="#00007D", lwd=1) # add it to graph
+lines(x26_pred$fit-1.96*x26_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x26_pred$fit+1.96*x26_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x26_pred$fit, lty="solid", col="#00007D", lwd=1) # add it to graph
 
-p21 <- plot(xDens21, main="JRI Retreat (Kaplan et al. 2020)",
-            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.8,
-            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,100),labels=rep("",122), tck=-0.02),
-            axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
-            axis(4, seq(0,0.01,0.001), labels=rep("",11), tck=0.04))
-par(new = FALSE) #remove hold on the plot frame to add median values
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  #axis(2, seq(0.6, 05),  tck=-0.04, las = 1)
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(100,12000,500),labels=rep("",25), tck=0.02),
+  axis(4, seq(0, 0.6, 0.3), tck=-0.08, las = 1, line = 1, col="#00007D", col.axis = "#00007D")
+)
+mtext("TOC (%)", side = 4, cex = 0.75, line = 4, col="#00007D")
 
-# F) JRI ice core record 
+# E) JRI Advance & retreat - Kaplan et al 2020
+p20 <- plot(xDens20, main="JRI Advance (Kaplan et al. 2020)", cex.main = 0.75,
+            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.75, col = "blue", alpha = 0.5,
+            tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL),
+            xaxt="n", yaxt="n", ann=FALSE, axes = FALSE)
+par(new = TRUE) #hold the plot frame
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,100),labels=rep("",122), tck=-0.02),
+  #axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  axis(4, seq(0,0.01,0.001), tck=-0.08, las = 1, line = 1))
+mtext("Density", side = 4, cex = 0.75, line = 5)
+#par(new = FALSE) #remove hold
 
+p21 <- plot(xDens21, main="JRI Retreat (Kaplan et al. 2020)", cex.main = 0.75,
+            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.75, col = "red", alpha = 0.5,
+            tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL),
+            xaxt="n", yaxt="n", ann=FALSE, axes = FALSE)
+par(new = TRUE)
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.04, line=1),
+            #axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
+            #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+            axis(4, seq(0,0.01,0.001), tck=-0.08, las = 1, line = 1)
+)
+mtext("Density", side = 4, cex = 0.75, line = 5)
+#par(new = FALSE) #remove hold
 
+# F) JRI ice core record - Mulvaney et al 2012
+p23 <- plot(T_anomaly~Age_BP, data = x23, pch = 21, type = "l", col="#800000", bg="#800000", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(-1.5, 2.5),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x23$T_upper_err~Age_BP, data = x23, 
+      lty=1, col="grey", lwd=0.75) # add upper 95% CI error bounds
+lines(x23$T_lower_err~Age_BP, data = x23,
+      lty=1, col="grey", lwd=0.75) # add lower 95% CI error bounds
+lines(x23$wmean~age1, data = x23, 
+      lty=3, col="black", lwd=0.75) # add 12 ka mean
+#lines(x23$upper~age1, data = x23, 
+#      lty=3, col="grey", lwd=0.75)
+#lines(x23$lower~age1, data = x23, 
+#      lty=3, col="grey", lwd=0.75)
+par(new = TRUE) 
+p23 <- plot(T_anomaly~Age_BP, data = x23, pch = 21, type = "l", col="#800000", bg="#800000", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-1.5, 2.5),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,500),labels=rep("",122), tck=-0.02),
+  axis(2, seq(-1.5, 2.5, 0.5), tck=-0.08,  las = 1, xpd = 1, line = 1, col.axis="#800000")
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  #axis(4, seq(-1.5, 2.5, 0.5), tck=0.04, las = 1, xpd = 1)
+  )
+mtext("Temp. Anomaly (deg. C)", side = 2, cex = 0.75, line = 5, col="#800000")
+#par(new = FALSE) #remove hold
 
-# Volcanism - check plot only for Figure 7 - not included in revised version  
+# G) Kaufmann et al 2020 - 90-60S and global temp 
+p25 <- plot(S90_S60_median~Age_Sh20, data = x25, pch = 21, type = "l", col="#800000", bg="#800000", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-1.5, 0.5),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new = TRUE) 
+p25 <- plot(S90_S60_median~Age_Sh20, data = x25, pch = 21, col="#800000", bg="#800000", 
+            cex= 0.2, xlim = c(-100, 12000), ylim = c(-1.5, 0.5),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x25$global_median~Age_Sh20, data = x25, 
+      lty=1, col="black", lwd=0.75) # add average median temp for 90-60S
+lines(x25$global_median~age1, data = x25, 
+      lty=3, col="grey", lwd=0.75) # add global data as a black line
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08), axis(1, seq(-100,12000,500),labels=rep("",122), tck=-0.02),
+  #axis(2, seq(-1.5, 2.5, 0.5), tck=-0.04,  las = 1, xpd = 1),
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  axis(4, seq(-1.5, 0.5, 0.5), tck=-0.08, las = 1, xpd = 1, line = 1)
+  )
+mtext("Temp. Anomaly (deg. C)", side = 4, cex = 0.75, line = 5)
+mtext("Age (cal. ka BP)", side = 1, cex = 0.75, line = 3)
+#par(new = FALSE) #remove hold
+
+# WAIS Divide volcanic Event Flux -------------------------------------------------------------
+
+#x35 <- read.csv("Inputs/x35_Vol_flux_WAIS.csv")
 #par(pin=c(plotinch, plotinch/4),  mgp=c(2,0.5,0), xaxs='i') 
-#p22 <- plot(x22, type = "l", lty = 1,  main="WASI Divide volcanic Event Flux",
+#p35 <- plot(x35, type = "l", lty = 1,  main="WAIS Divide volcanic Event Flux",
 #            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
 #            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
 #par(new = TRUE) #hold the plot frame to add median values
-#p22 <- plot(x22, type ="p", pch =20, cex=0.5,  main="WASI Divide volcanic Event Flux",
+#p35 <- plot(x35, type ="p", pch =20, cex=0.5,  main="WASI Divide volcanic Event Flux",
 #            xlab="Age [a BP]", xlim = c(-100, 12000), cex.main = 1,
 #            tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
 #p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
@@ -1556,110 +1745,739 @@ par(new = FALSE) #remove hold on the plot frame to add median values
 
 
 
+#  Figure 7 - Mechanisms ---------------------------------------------------
+
+library(Bchron)
+
+#set working directory on mac
+setwd("/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data")
+
+# New Data
+x8 <- read.csv("Inputs/x8_Advance_KGI.csv") # run density phase analysis once
+xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,
+                                   positions = position, calCurves = calCurves, allowOutside = TRUE)) # run once at start
+xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+                                numMix = 80)) # run once at start
+
+x9.4 <- read.csv("Inputs/x9.4_Retreat_KGI_earlyHolocene_cosmo.csv")
+x9.5 <- read.csv("Inputs/x9.5_Retreat_KGI_earlyHolocene_lakes.csv")
+
+x13 <- read.csv("Inputs/x13_Cosmo_Fildes.csv")
+v <- c('ages')  ## create vector of column names to recaluculate as cal ka BP
+x13[v] <- x13[v] - (2010-1950)  # convert to BP by subtracting 1950 from samples collection date and assign back
+
+x13.1 <- read.csv("Inputs/x13.1_Cosmo_Potter.csv")
+x13.1[v] <- x13.1[v] - (2010-1950) # convert to BP
+
+# Published data
+x30 <- read.csv("Inputs/x30_Laskar2004_InsAnomaly_62S.csv")
+bp <- c('Age_ka')  # create vector of column names to recalculate as ka BP
+x30[bp] <- x30[bp] - (2000-1950)  # convert to BP by subtracting 1950 from samples collection date and assign back
+
+x31 <- read.csv("Inputs/x31_Baggenstos2019_Irradiance.csv")
+x32 <- read.csv("Inputs/x32_Saunders2018_SPECIM.csv")
+x33 <- read.csv("Inputs/x33_Saunders2018_DCond.csv") # updated age to Sh20
+x34 <- read.csv("Inputs/x34_Moreno2018_SAM.csv")  # updated age to Sh20
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch <- 3.149608
+b <- ((8.27-plotinch)/2)-1
+checksize <- b*2+plotinch+2
+## FINAL PLOT TO PDF
+pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
+layout(matrix(1:5, ncol=1)) # Set up layout
+par(mai=c(0.1,0.1,0.1,0.15), omi=c(0,0,0,0), pin=c(plotinch, plotinch/4), mgp=c(2,1,0), xaxs='i') # Set up internal margins
+# PLOT TO SCREEN FIRST
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+layout(matrix(1:6, ncol=1)) # Set up layout
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch, plotinch/4),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# A) Insolation and Irradiance
+p30 <- plot(Spring_Summer_SONDJF~Age_ka, data = x30, pch = 21, type = "l", col="red", bg="red", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-8, 8),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+p30a <- plot(Winter_JJA~Age_ka, data = x30, pch = 21, type = "l", col="blue", bg="blue", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-8, 8),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE) 
+p30b <- plot(Annual~Age_ka, data = x30, pch = 21, type = "l", lty = 3, col="black", bg="black", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-8, 8),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE) 
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), labels=rep("",37),
+            axis(4, seq(-8,8,2), tck=-0.08, las = 1, xpd = 1, line = 1)
+            )
+mtext("62S Insolation 
+      Anomaly (W m-2)", cex = 0.75, adj = 0.75, col = "black", xpd = TRUE, side=4, line=5)
+par(new = TRUE)
+p31 <- plot(LOESS_100_dTSI~LOESS_100yr, data = x31, pch = 21, type = "l", col="#800000", bg="#800000", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-0.5, 0.5),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+# add mean dTSI and error bar
+p31 <- plot(mean~plot_age, data = x31, pch = 21, col="#800000", bg="white", 
+            cex= 2, xlim = c(-100, 12000), ylim = c(-0.5, 0.5),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+#p_axis <- c(axis(1, labels = FALSE))
+arrows(x0=x31$plot_age,
+       y0=x31$mean-x31$error,
+       x1=x31$plot_age,
+       y1=x31$mean+x31$error,
+       angle=180,
+       code=3,
+       length=0,
+       col = "#800000",
+       lwd=1)
+par(new=TRUE)
+p31 <- plot(mean~plot_age, data = x31, pch = 21, col="#800000", bg="white", 
+            cex= 2, xlim = c(-100, 12000), ylim = c(-0.5, 0.5),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), labels=rep("",37),
+            axis(2, seq(-0.5,0.5,0.5), tck=-0.08, las=1, col = "#800000", col.axis = "#800000", line = 1))
+mtext("dTSI  W m-2", cex = 0.75, col = "#800000", side=2, line=5)
+
+# B) Saunders et al 2018 - Macquarie SHW - get rest of data from Sigmaplot
+
+p32 <- plot(R850_R900~Age_BP_Sh20_mean, data = x32, pch = 21, type = "l", col="#99CC99", bg="#99CC99", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(0.8,1.1),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+# set up the LOESS
+output_int_yrs = 1000 #enter the final output interval, e.g., 100 year LOESS output = 1000/12100
+age_range = 12000-(-100) # enter the age range 
+alpha <- output_int_yrs/age_range #calculate the span value
+lw32 <- loess(R850_R900~Age_BP_Sh20_mean, 
+              data = x32,
+              span = alpha)
+x32_count <- seq(from=-100, to=12000, by=1) # set up count fro 0-12 ka
+x32_count_rev <- order(x32_count, decreasing=TRUE)
+x32_pred <- predict(lw32, x32_count, se=TRUE) # Fit the LOESS
+lines(x32_pred$fit, lty="solid", col="#008000", lwd=0.75) # add it to graph
+lines(x32_pred$fit-1.96*x32_pred$se.fit, 
+      lty="dashed", col="grey", lwd=0.75) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x32_pred$fit+1.96*x32_pred$se.fit, 
+      lty="dashed", col="grey", lwd=0.751) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x32_pred$fit, lty="solid", col="#008000", lwd=0.75) # add it to graph
+#Create polygon error shading - doesn't work for negative values on x-axis
+#x32_y_polygon <- c((x32_pred$fit+1.96*x32_pred$se.fit)[x32_count], 
+#                   (x32_pred$fit-1.96*x32_pred$se.fit)[x32_count_rev]) 
+#x32_x_polygon <- c(x32_count, x32_count_rev)
+#polygon(x32_x_polygon, x32_y_polygon, col="#00009933", border=NA)
+par(new = TRUE)
+p32b <- plot(R850_R900_mean~age_plot, data = x32, pch = 21, type = "l", lty = 2, lwd = 1, col="#666666", bg="#666666", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(0.8,1.1),
+             frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+p32c <- plot(R850_R900_mean+R850_R900_sd~age_plot, data = x32, pch = 21, type = "l", lty = 3, lwd = 1, col="#B2B2B2", bg="#B2B2B2", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(0.8,1.1),
+             frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE)
+p32d <- plot(R850_R900_mean-R850_R900_sd~age_plot, data = x32, pch = 21, type = "l", lty = 3, lwd = 1, col="#B2B2B2", bg="#B2B2B2", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(0.8,1.1),
+             frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+p_axis <- c(#axis(1, seq(0,18000,2000), tck=-0.04), labels=rep("",37),
+            axis(4, seq(0.8,1.1,0.1), tck=-0.08, col = "#008000", col.axis = "#008000", las=1, line=1))
+mtext("R850/R900 index
+      Minerogenic input", cex = 0.75, side=4, line=5, col = "#008000", adj = 0.8, xpd = TRUE)
+
+# D) SAM plot
+p34 <- plot(SAM_index_reconstruction~Age_Sh13, data = x34, pch = 21, type = "l", col="black", bg="black", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-2, 6),
+            frame=FALSE, ylab = "", xlab="", yaxt="n", xaxt="n")
+par(new = TRUE) #hold the plot frame to add median values
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), labels=rep("",37),
+            axis(4, seq(-2,6,2), tck=-0.08, las=1, line=1))
+mtext("Reconstructed
+      SAM Index", cex = 0.75, side=4, line=5, col = "black", srt=180, adj = 1, xpd = TRUE)
+
+# G) KGI: max. age constraint phases for glacier readvance  [this study, HB et al., sub & Hall, 2007]
+p8 <- plot(xDens8, xlab="", xlim = c(-100, 12000), cex.main = 1, las = 0, axes = FALSE,
+           tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL), 
+           xaxt="n", yaxt="n", ann=FALSE) #supress x-axis
+par(new = TRUE) #hold the plot frame
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.04, line=1),
+  axis(2, seq(0,0.012,0.002), tck=-0.08, las = 1, line = 1)#,
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02)
+)
+mtext("Age (cal. ka BP)", cex = 0.75, side=1, line=4, col = "black", xpd = TRUE)
+mtext("Density", cex = 0.75, side=2, line=5, col = "black", xpd = TRUE)
+
+# E) KGI Deglaciation - ** new plot 0-18 ka ** align in illustrator **
+
+# 0-18 ka plot 12 cm wide
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch1 <- 12 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch1 <- 3.149608 *(12/8)
+b <- ((8.27-plotinch1)/2)-1
+checksize <- b*2+plotinch1+2
+## FINAL PLOT TO PDF
+pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
+layout(matrix(1:2, ncol=1)) # Set up layout
+par(mai=c(0.25,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch1, plotinch1/1.99710788366826), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
+# PLOT TO SCREEN FIRST
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+layout(matrix(1:2, ncol=1)) # Set up layout
+par(mai=c(0.25,0.25,0.25,0.25), pin=c(plotinch1, plotinch1/1.99710788366826),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# Add new Fildes new cosmo ages to secondary axis of altitude
+x <- x13$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13$altitude
+x.err <- x13$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - cosmo ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.4$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.4$altitude
+x.err <- x9.4$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - lake ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.5$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.5$altitude
+x.err <- x9.5$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# Potter He-3 cosmo ages
+par(new=TRUE)
+x <- x13.1$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13.1$altitude
+x.err <- x13.1$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+p_axis <- c(axis(1, seq(0,18000,2000), tck=-0.04, cex.axis = 0.75), labels=rep("",37), 
+  axis(4, seq(0,300,50), cex.axis = 0.75, las=1))
+mtext("Age (a BP)", side=1, line=2, col = "black", cex = 0.75)
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "black", cex = 0.75)
+
+
+
+
+
 
 # POTTER PAPER  ---------------------------------------------------------
 
-# Clear plots
-if(!is.null(dev.list())) dev.off()
-## Translate 8 cm graph plot size *from* cm *to* inches:
-plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
-plotinch
-# if the pdf A4 width is 8.27 inches the l and right margins are then b
-# total pdf width - plot width then divide by 2 to give margin width on each size
-# then -1 to for mai = 1 inch left and right
-b <- ((8.27-plotinch)/2)-1
-checksize <- b*2+plotinch+2
-checksize #should = 8.27 inches A4 width
+#set working directory on mac
+setwd("/Users/Steve/Dropbox/BAS/Data/R/BChron/KGI/Data")
 
 ## FINAL PLOT TO PDF
-#mai / omi = margin in inches or mar / oma = margin in lines - order is bottom, left, top, right 
-#set up the page layout - A4 is 8.27 x 11.69 - closest to 
-pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
-layout(matrix(1:3, ncol=1)) # Set up layout
-#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch, plotinch/2), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
-#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
+#pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
+#layout(matrix(1:6, ncol=1)) # Set up layout
+#par(mai=c(0.1,0.1,0.1,0.1), omi=c(0,0,0,0), pin=c(plotinch, plotinch/4), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
 
-#  PLOT TO SCREEN FIRST
+#  Figure 6: Potter and KGI advance data ---------------------------------------------
+
+# B) # 0-18 ka plot 12 cm wide
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch1 <- 12 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch1 <- 3.149608 *(12/8)
+b <- ((8.27-plotinch1)/2)-1
+checksize <- b*2+plotinch1+2
+
+# PLOT TO SCREEN FIRST
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+layout(matrix(1:2, ncol=1)) # Set up layout
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch1, plotinch1/1.99710788366826),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# D) RCarbon Stacked Density Potter C14 ages prob plot 
+
+# PLOT TO SCREEN FIRST
 # Clear plots
 if(!is.null(dev.list())) dev.off()
 # plot XDens output together for comparison
-layout(matrix(1:3, ncol=1)) # Set up layout
+layout(matrix(1:2, ncol=1)) # Set up layout
 #par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
-# mai sets up internal margins around plot in inches
-# pin sets up the size of the plot in inches - here its 8 cm wide by 8/3 cm high
-# mgp sets: axis label distance from axis, tick labels from ticks, tick distance from the line
-# xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
-# omi sets up internal margin around output in inches
-# example of math equation as text in graph
-# text(7, 4, expression(bar(x) == sum(frac(x[i], n), i==1, n))) - or expression(hat(beta) == (X^t * X)^{-1} * X^t * y) 
-# for text: font = 2 is bold, 3 is italic, 4 is bold italic
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch1, plotinch1/3),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+
+library(rcarbon)
+r6 <- read.csv("Inputs/r6_Potter_Terr_Holocene.csv")
+# define time ranges
+r6_timeRange_18ka <- c(18000,-100)
+r6_revtimeRange_18ka <- c(-100,18000)
+r6_cal <- calibrate(r6$CRA, r6$Error, normalised=TRUE, calCurves=r6$calCurves,
+                    resOffsets=r6$resOffsets,resErrors=r6$resErrors,ids=r6$LabID)
+#create bins based using a suitable h split value based on maximum consensus in above  
+r6_bins <- binPrep(r6$SiteName, r6$CRA, h=100)
+r6_res = stackspd(x=r6_cal,timeRange=r6_timeRange_18ka,bins=r6_bins,group=r6$SiteName)
+# make a stacked plot
+p6 <- plot(r6_res,type='stacked', xlim = r6_revtimeRange_18ka, 
+           legend = TRUE, legend.arg = NULL, ann = FALSE, axes=FALSE, xaxt="n", yaxt="n")  # most useful for summaries of multiple sites / types
+axis(side=1, at=seq(0, 18000, by=2000))
+axis(side=2, at=seq(0,0.030, by=0.005))
+par(new = TRUE) # hold the plot frame
+
+# E) KGI: max. age constraint phases for glacier readvance  [this study, HB et al., sub & Hall, 2007]
+x8 <- read.csv("Inputs/x8_Advance_KGI.csv") # run density phase analysis once
+#xAges8 <- with (x8, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,
+#                                    positions = position, calCurves = calCurves, allowOutside = TRUE)) # run once at start
+#xDens8 <- with(x8, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, 
+#                                 numMix = 80)) # run once at start
+
+p8 <- plot(xDens8, xlab="", xlim = c(-100, 12000), cex.main = 1, las = 0, axes = FALSE,
+           tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL), 
+           xaxt="n", yaxt="n", ann=FALSE) #supress x-axis
+par(new = TRUE) #hold the plot frame
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.04, line=1),
+            axis(2, seq(0,0.012,0.002), tck=-0.08, las = 1, line = 1)#,
+            #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04), axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02)
+)
+mtext("Age (cal. ka BP)", cex = 0.75, side=1, line=4, col = "black", xpd = TRUE)
+mtext("Density", cex = 0.75, side=2, line=5, col = "black", xpd = TRUE)
+
+# Add new Fildes new cosmo ages to secondary axis of altitude
+x <- x13$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13$altitude
+x.err <- x13$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - cosmo ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.4$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.4$altitude
+x.err <- x9.4$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - lake ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.5$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.5$altitude
+x.err <- x9.5$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# Potter He-3 cosmo ages
+par(new=TRUE)
+x <- x13.1$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13.1$altitude
+x.err <- x13.1$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+p_axis <- c(axis(1, seq(0,18000,2000), tck=-0.04, cex.axis = 0.75), labels=rep("",37), line=1, 
+            axis(4, seq(0,300,50), tck=-0.04, cex.axis = 0.75, las=1, line=1))
+mtext("Age (a BP)", side=1, line=2, col = "black", cex = 0.75)
+mtext("Altitude (m a.s.l.)", side=4, line=3, col = "black", cex = 0.75)
+
+#  Figure 9: Palaeo-records ---------------------------------------------
+
+# Published datasets - import other datasets from Fildes plots above new datasets 
+x17 <- read.csv("Inputs/x17_Yanou_GDGT.csv")
+x20 <- read.csv("Inputs/x20_Kaplan2020_JRI_Advance.csv")
+x20[v] <- x20[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
+xAges20 <- with (x20, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xDens20 <- with(x20, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 30))
+x21 <- read.csv("Inputs/x21_Kaplan2020_JRI_Retreat.csv")
+x21[v] <- x21[v] - (2010-1950) #convert to BP from sampling date (nearest 10 years) and assign back
+xAges21 <- with (x21, BchronCalibrate(ids = id, ages = ages, ageSds = ageSds,positions = position, calCurves = calCurves, allowOutside = TRUE))
+xDens21 <- with(x21, BchronDensity(ages = ages, ageSds = ageSds,calCurves = calCurves, numMix = 20))
+x23 <- read.csv("Inputs/x23_JRI_ice_core.csv")
+x26 <- read.csv("Inputs/x26_Miliken2009.csv")
+x27 <- read.csv("Inputs/x27_Etourneaux2013_SST.csv")
+x28 <- read.csv("Inputs/x28_Shevenell_TEX86.csv")
+x29 <- read.csv("Inputs/x29_Roberts2017_WAP_diatoms.csv")
+
+# LARGER HEIGHT PLOTS - plot to screen ----------------------------------
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch <- 3.149608
+b <- ((8.27-plotinch)/2)-1
+checksize <- b*2+plotinch+2
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+# plot XDens output together for comparison
+layout(matrix(1:7, ncol=1)) # Set up layout
+#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch, plotinch/3),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# E) Yanou GDGT and tephra plots
+p17a <- plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, type = "l", col="#D19C9C", bg="#D19C9C", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$mean_ANT_anomaly~age1, data = x17, 
+      lty="dotted", col="#D19C9C", lwd=0.75) # add average median temp for 90-60S
+par(new=TRUE)
+plot(GDGT_Anomaly_FOSTER_2016~Age_Sh20, data = x17, pch = 21, col="#D19C9C", bg="#D19C9C",
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$RMSE_Max_anomaly~Age_Sh20, data = x17, 
+      lty=1, col="grey", lwd=0.75) # add upper 95% CI error bounds
+lines(x17$RMSE_min_anomaly~Age_Sh20, data = x17,
+      lty=1, col="grey", lwd=0.75) # add lower 95% CI error bounds
+par(new=TRUE)
+p17b <- plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, type = "l", col="#800000", bg="#800000", 
+             cex= 1, xlim = c(-100, 12000), ylim = c(-5, 16),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x17$mean_ANT_GLOBAL_anomaly~age1, data = x17, 
+      lty="dotted", col="#800000", lwd=0.75) # add global data as a black line
+par(new=TRUE)
+plot(GDGT_ANT_GLOBAL_anomaly~Age_Sh20, data = x17, pch = 21, col="#800000", bg="#800000", 
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-5, 16),
+     frame=FALSE, ylab="Temp. anomaly", xaxt="n", yaxt="n", ann=FALSE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.08, line = 1), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  axis(2, seq(-5,16,5),  tck=-0.08, las = 1, line = 1, col = "#800000", col.axis = "#800000")
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(100,12000,500),labels=rep("",25), tck=0.02),
+  #axis(4, seq(-5,16,5), tck=0.04), las = 1)
+)
+mtext("Temp. Anomaly 
+      (deg. C)", side = 2, cex = 0.75, line = 4, adj=-0.1, col = "#C80000")
+
+# F) JRI ice core record - Mulvaney et al 2012
+p23 <- plot(T_anomaly~Age_BP, data = x23, pch = 21, type = "l", col="#800000", bg="#800000", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-2, 2.5),
+            axes=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x23$T_upper_err~Age_BP, data = x23, 
+      lty=1, col="grey", lwd=0.75) # add upper 95% CI error bounds
+lines(x23$T_lower_err~Age_BP, data = x23,
+      lty=1, col="grey", lwd=0.75) # add lower 95% CI error bounds
+lines(x23$wmean~age1, data = x23, 
+      lty=3, col="black", lwd=0.75) # add 12 ka mean
+#lines(x23$upper~age1, data = x23, 
+#      lty=3, col="grey", lwd=0.75)
+#lines(x23$lower~age1, data = x23, 
+#      lty=3, col="grey", lwd=0.75)
+par(new = TRUE) 
+p23 <- plot(T_anomaly~Age_BP, data = x23, pch = 21, type = "l", col="#800000", bg="#800000", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-2, 2.5),
+            axes=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x23$warmphase_plot~RRR, data = x23, 
+      lty=1, col="#FF0000", lwd=4) 
+lines(x23$warmphase_plot~MCA, data = x23, 
+      lty="dotted", col="#E26464", lwd=4) 
+lines(x23$warmphase_plot~HH, data = x23, 
+      lty=1, col="#950000", lwd=4) 
+lines(x23$warmphase_plot~EHWP, data = x23, 
+      lty=1, col="#950000", lwd=4) 
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.04, line=1),
+  axis(2, seq(-2, 2.5, 1), tck=-0.08,  las = 1, xpd = 1, line = 1, col = "#800000", col.axis = "#800000")
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  #axis(4, seq(-1.5, 2.5, 0.5), tck=0.04, las = 1, xpd = 1)
+)
+mtext("Temp. Anomaly 
+      (deg. C)", side = 2, cex = 0.75, adj = -0.1, line = 4, col="#800000")
+#par(new = FALSE) #remove hold
+
+# SMALL HEIGHT PLOTS - plot to screen ---------------------------------
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch <- 3.149608
+b <- ((8.27-plotinch)/2)-1
+checksize <- b*2+plotinch+2
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+# plot XDens output together for comparison
+layout(matrix(1:7, ncol=1)) # Set up layout
+#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch, plotinch/5),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0))
+
+# F) Miliken sea-ice record
+p26 <- plot(TOC_pc~Age_BP, data = x26, pch = 21, type = "l", col="#B9C7F0", bg="#B9C7F0", 
+             cex= 1, xlim = c(-100, 12000), ylim = rev(range(TOC_pc)),
+             frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x26$mean_6ka~age1, data = x26, 
+      lty="dotted", col="black", lwd=0.75) # add average median temp for 90-60S
+par(new=TRUE)
+plot(TOC_pc~Age_BP, data = x26, pch = 21, col="#B9C7F0", bg="#B9C7F0",
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(0.6, 0),
+     frame=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+par(new = TRUE)
+# set up and plot 100-yr  LOESS
+# see https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/loess for details
+# locally weighted sum of squares, 2nd order polynomial, Gaussian fit 
+# span α<1 determined by the time interval of the whole dataset and tri-cubic weighting proportional to (1-(distance/max. distance)3)3
+# Ref: W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models. Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie, Wadsworth & Brooks/Cole.
+output_int_yrs = 1000 #enter the final output interval, e.g., 100 year LOESS output = 1000/12100
+age_range = 10000-(-100) # enter the age range 
+alpha26 <- output_int_yrs/age_range #calculate the span value
+lw26 <- loess(TOC_pc~Age_BP, 
+              data = x26,
+              span = alpha26,
+              degree = 2,
+              family = "gaussian")
+x26_count <- seq(from=-100, to=10000, by=1) # set up count fro 0-10 ka
+x26_count_rev <- order(x26_count, decreasing=TRUE)
+x26_pred <- predict(lw26, x26_count, se=TRUE) # Fit the LOESS
+lines(x26_pred$fit, lty="solid", col="#00007D", lwd=1) # add it to graph
+lines(x26_pred$fit-1.96*x26_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x26_pred$fit+1.96*x26_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x26_pred$fit, lty="solid", col="#00007D", lwd=1) # add it to graph
+
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  #axis(2, seq(0.6, 05),  tck=-0.04, las = 1)
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(100,12000,500),labels=rep("",25), tck=0.02),
+  axis(4, seq(0, 0.6, 0.3), tck=-0.08, las = 1, line = 1, col="#00007D", col.axis = "#00007D")
+  )
+mtext("TOC (%)", side = 4, cex = 0.75, line = 4, col="#00007D")
+
+# G) WAP sea-ice record - Roberts et al. (2017)
+p29 <- plot(Fcurta_Fkerg~Age_Mar20, data = x29, pch = 21, type = "l", col="#808080", bg="#808080", 
+            cex= 1, xlim = c(-100, 12000), ylim = rev(range(Fcurta_Fkerg)),
+            frame=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x29$mean12ka~age1, data = x29, 
+      lty="dotted", col="black", lwd=0.75) # mean
+par(new=TRUE)
+plot(Fcurta_Fkerg~Age_Mar20, data = x29, pch = 21, col="#808080", bg="#808080",
+     cex= 0.5, xlim = c(-100, 12000), ylim = rev(range(Fcurta_Fkerg)),
+     axes=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  axis(2, seq(0, 4, 0.5),  tck=-0.08, las = 1, line=1, col="#808080", col.axis="#808080")
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(100,12000,500),labels=rep("",25), tck=0.02),
+  #axis(4, seq(0, 3, 1), tck=-0.06, las = 1)
+)
+mtext("F. curta / 
+F. Kerg.", side = 2, cex = 0.75, line = 4, adj = 0.5, col="#808080")
+
+par(new = TRUE) # add open water pelagic plot on secondary axis
+
+p29a <- plot(PelagicOW_pc~Age_Mar20, data = x29, pch = 21, type = "l", col="#0000C8", bg="#0000C8", 
+            cex= 1, xlim = c(-100, 12000), ylim=c(0, 40),
+            axes=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+par(new = TRUE)
+plot(PelagicOW_pc~Age_Mar20, data = x29, pch = 21, col="#0000C8", bg="#0000C8",
+     cex= 0.5, xlim = c(-100, 12000), ylim=c(0, 40),
+     axes=FALSE, ylab="", xlab="",xaxt="n", yaxt="n", ann=FALSE)
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), #axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.02),
+  axis(4, seq(0, 40, 10),  tck=-0.08, las = 1, line=1, col="#0000C8", col.axis = "#0000C8"), 
+  axis(4, seq(0, 40, 10),  tck=-0.04, las = 1, line=1, col="#0000C8", col.axis = "#0000C8"))
+mtext("Pelagic Open  
+Water sp. (%)", side = 4, cex = 0.75, line = 5, adj = 0, col = "#0000C8")
+
+# H) SST Temp - Etourneuax et al. (2013) 
+p27 <- plot(SST_degC~Age_Mar20, data = x27, pch = 21, type = "l", col="#D19C9C", bg="#D19C9C", 
+            cex= 1, xlim = c(-100, 12000), ylim = c(-1, 5),
+            axes=FALSE, ylab="", xlab="", xaxt="n", yaxt="n", ann=FALSE)
+lines(x27$mean_6ka~age1, data = x27, 
+      lty="dotted", col="black", lwd=0.75) # mean
+par(new=TRUE)
+plot(SST_degC~Age_Mar20, data = x27, pch = 21, col="#D19C9C", bg="#D19C9C",
+     cex= 0.5, xlim = c(-100, 12000), ylim = c(-1, 5),
+     axes=FALSE, ylab=NULL, xlab="",xaxt="n", yaxt="n", ann=FALSE)
+# set up and plot 100-yr  LOESS
+output_int_yrs = 1000 #enter the final output interval, e.g., 100 year LOESS output = 1000/12100
+age_range = 9000-(-100) # enter the age range 
+alpha27 <- output_int_yrs/age_range #calculate the span value
+lw27 <- loess(SST_degC~Age_Mar20, 
+              data = x27,
+              span = alpha27)
+x27_count <- seq(from=-100, to=9000, by=1) # set up count fro 0-10 ka
+x27_count_rev <- order(x27_count, decreasing=TRUE)
+x27_pred <- predict(lw27, x27_count, se=TRUE) # Fit the LOESS
+lines(x27_pred$fit, lty="solid", col="#800000", lwd=1) # add it to graph
+lines(x27_pred$fit-1.96*x27_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x27_pred$fit+1.96*x27_pred$se.fit, 
+      lty=1, col="grey", lwd=1) #Fit 95% error lines - SE is very small here as there's so much data!
+lines(x27_pred$fit, lty="solid", col="#800000", lwd=1) # add it to graph
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.04, line=1),
+            axis(2, seq(-1, 5, 1),  tck=-0.08, las = 1, line=1, col="#800000", col.axis = "#800000"),
+            axis(2, seq(-1, 5, 1),  tck=-0.04, las = 1, line=1, col="#800000", col.axis = "#800000")
+)
+mtext("SST Temp 
+(deg. C)", side = 2, cex = 0.75, line = 4, col="#800000")
+
+# SMALLER HEIGHT PLOTS - PLOT TO SCREEN ---------------------------------
+
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+plotinch <- 8 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch <- 3.149608
+b <- ((8.27-plotinch)/2)-1
+checksize <- b*2+plotinch+2
+# Clear plots
+if(!is.null(dev.list())) dev.off()
+# plot XDens output together for comparison
+layout(matrix(1:7, ncol=1)) # Set up layout
+#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch, plotinch/10),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0))
 
 
-#  Figure 6: KGI advance data ---------------------------------------------
+# I) JRI Advance & retreat - Kaplan et al 2020
+p20 <- plot(xDens20, main="JRI Advance (Kaplan et al. 2020)", cex.main = 0.75,
+            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.75, col = "blue", alpha = 0.5,
+            tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL),
+            xaxt="n", yaxt="n", ann=FALSE, axes = FALSE)
+par(new = TRUE) #hold the plot frame
+p_axis <- c(#axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(-100,12000,100),labels=rep("",122), tck=-0.02),
+  #axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  axis(4, seq(0,0.01,0.001), tck=-0.08, las = 1, line = 1))
+mtext("Density", side = 4, cex = 0.75, line = 5)
+#par(new = FALSE) #remove hold
 
-p8 <- plot(xDens8, main="King George Island: advance",
-           xlab="Age [a BP]", xlim = c(-100, 12000),
-           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.015,0.005), labels=rep("",16), tck=-0.02), 
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
-            axis(4, seq(0,0.015,0.005), labels=rep("",16), tck=0.02))
-par(new = FALSE) #remove hold on the plot frame to add other data eg median values
-dev.off() #need to include this to write to pdf file fully - will delete screen plot
-
-p6 <- plot(xDens6, main="Potter Peninsula: max. age constraints on glacier advance",
-           xlab="Age [a BP]", xlim = c(-100, 12000),
-           tck=-0.04, panel.first = grid(nx = NULL, col = "lightgray", lty = "dotted"))
-par(new = TRUE) #hold the plot frame to add median values
-p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-            axis(2, seq(0,0.015,0.005), labels=rep("",16), tck=-0.02), 
-            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
-            axis(4, seq(0,0.015,0.005), labels=rep("",16), tck=0.02))
-par(new = FALSE) #remove hold on the plot frame to add median values
-dev.off() #need to include this to write to pdf file fully - will delete screen plot
-
-#other types of plot to possibly use 
-#pr6 <- plot(r6_res,type='stacked', xlim = r6_revtimeRange, legend = TRUE, legend.arg = NULL)  #most useful for summaries of multiple sites / types
-#par(new = TRUE) #hold the plot frame to add median values
-#p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.04), axis(1, seq(0,12000,500),labels=rep("",25), tck=-0.02),
-#            axis(2, seq(0,0.03,0.001), labels=rep("",31), tck=-0.02), 
-#            axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(0,12000,500),labels=rep("",25), tck=0.02),
-#            axis(4, seq(0,0.03,0.001), labels=rep("",31), tck=0.02))
-#par(new = FALSE) #remove hold on the plot frame to add median values
+p21 <- plot(xDens21, main="JRI Retreat (Kaplan et al. 2020)", cex.main = 0.75,
+            xlab="Age [a BP]", xlim = c(-100, 12000), cex = 0.75, col = "red", alpha = 0.5,
+            tck=-0.04, panel.first = grid(nx = NULL, col = NULL, lty = NULL),
+            xaxt="n", yaxt="n", ann=FALSE, axes = FALSE)
+par(new = TRUE)
+p_axis <- c(axis(1, seq(0,12000,2000), tck=-0.08, line=1), axis(1, seq(0,12000,500), labels=rep("",25), tck=-0.04, line=1),
+  #axis(2, seq(0,0.01,0.001), labels=rep("",11), tck=-0.04), 
+  #axis(3, seq(0,12000,2000), labels=rep("",7), tck=0.04),axis(3, seq(-100,12000,100),labels=rep("",122), tck=0.02),
+  axis(4, seq(0,0.01,0.001), tck=-0.08, las = 1, line = 1)
+)
+mtext("Density", side = 4, cex = 0.75, line = 5)
+#par(new = FALSE) #remove hold
 
 # Figure 10D  mechanisms plot to 18 ka -------------------------------------------------------------
 
+# E) KGI Deglaciation - ** new plot 0-18 ka ** align in illustrator **
+
+# 0-18 ka plot 12 cm wide
 # Clear plots
 if(!is.null(dev.list())) dev.off()
-## Translate 12 cm graph plot size *from* cm *to* inches:
-plotinch <- 12 / cm(1) # -> 8 cm  is  3.149606 inches
-plotinch
-# if the pdf A4 width is 8.27 inches the l and right margins are then b
-# total pdf width - plot width then divide by 2 to give margin width on each size
-# then -1 to for mai = 1 inch left and right
-b <- ((8.27-plotinch)/2)-1
-checksize <- b*2+plotinch+2
-checksize #should = 8.27 inches A4 width
+plotinch1 <- 12 / cm(1) # -> 8 cm  is  3.149606 inches
+plotinch1 <- 3.149608 *(12/8)
+b <- ((8.27-plotinch1)/2)-1
+checksize <- b*2+plotinch1+2
 
 ## FINAL PLOT TO PDF
-#mai / omi = margin in inches or mar / oma = margin in lines - order is bottom, left, top, right 
-#set up the page layout - A4 is 8.27 x 11.69 - closest to 
 pdf("output.pdf", pointsize=12,  width = 8.27, height = 11.69) #will fit to t
-layout(matrix(1:3, ncol=1)) # Set up layout
-#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), omi=c(0,0,0,0), pin=c(plotinch, plotinch/2), mgp=c(2,0.5,0), xaxs='i') # Set up internal margins
-#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
-
-#  PLOT TO SCREEN FIRST
+layout(matrix(1:2, ncol=1)) # Set up layout
+par(mai=c(0.1,0.1,0.1,0.1), omi=c(0,0,0,0), pin=c(plotinch1, plotinch1/1.3), mgp=c(2,1,0), xaxs='i') # Set up internal margins
+# PLOT TO SCREEN FIRST
 # Clear plots
 if(!is.null(dev.list())) dev.off()
-# plot XDens output together for comparison
-layout(matrix(1:3, ncol=1)) # Set up layout
-#par(mai=c(4,4,3,4), pin=c(plotinch, plotinch/2), xaxs='i') #plot size in inches
-par(mai=c(0.1,0.25,0.25,0.25), pin=c(plotinch, plotinch/2),  mgp=c(2,0.5,0), xaxs='i', omi=c(0,0,0,0)) 
+layout(matrix(1:2, ncol=1)) # Set up layout
+par(mai=c(0.1,0.1,0.1,0.1), pin=c(plotinch1, plotinch1/1.3),  mgp=c(2,1,0), xaxs='i', omi=c(0,0,0,0)) 
+
+# Add new Fildes new cosmo ages to secondary axis of altitude
+x <- x13$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13$altitude
+x.err <- x13$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# Potter He-3 cosmo ages
+par(new=TRUE)
+x <- x13.1$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x13.1$altitude
+x.err <- x13.1$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - cosmo ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.4$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.4$altitude
+x.err <- x9.4$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+# KGI early Holocene deglaciation constraints - lake ages to secondary axis of altitude
+par(new=TRUE)
+x <- x9.5$ages
+#y <- c(0.004, 0.005, 0.006)
+y <- x9.5$altitude
+x.err <- x9.5$ageSds
+#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
+#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
+par(new=TRUE)
+plot(x, y, pch = 22, col= "black", bg= "white", cex = 1,
+     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
+
+p_axis <- c(axis(1, seq(0,18000,2000), tck=-0.04), labels=rep("",37), line=1,
+            axis(4, seq(0,300,100), las=1, line=1))
+mtext("Age (a BP)", side=1, line=2, col = "black", cex = 1)
+mtext("Altitude (m a.s.l.)", side=4, line=2, col = "black", cex = 1)
 
 # BChron Potter C14 ages prob plot 
 p6 <- plot(xDens6, main="Potter Peninsula: max. age constraints on glacier advance",
@@ -1700,95 +2518,29 @@ p_axis <- c(axis(1, seq(0,18000,2000), tck=-0.04), axis(1, seq(0,18000,500),labe
             axis(4, seq(0,0.015,0.005), labels=rep("",16), tck=0.02))
 par(new = FALSE) #remove hold on the plot frame to add median values
 
-# Add extra data on secondary axis
-
-# Potter He-3 cosmo ages
-par(new=TRUE)
-x <- x13b$ages
-#y <- c(0.004, 0.005, 0.006)
-y <- x13b$altitude
-x.err <- x13b$ageSds
-#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
-#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
-par(new=TRUE)
-plot(x, y, pch = 21, col= "#C80000", bg= "#C80000", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-axis(4,  ylim=c(0,300), col = "black", col.lab = "black", col.axis = "black")
-mtext("Altitude (m a.s.l.)", side=4, line=2, col = "black", cex = 0.75)
-par(new = FALSE) #remove hold on the plot frame to add median values
-
-# Add ALL KGI cosmo ages to plot 5 on secondary axis of altitude
-# this is too complicated - visually dominated by high elevation cosmo ages from Barton Pen
-# all BP cosmo ages make it seem like deglaciation didnt happen until late Holocene 
-# Used early Holocene data only instead - cut off at BArton oldest basal age from lake above marine limit
-
-# par(new=TRUE)
-# x <- x14$ages
-#y <- c(0.004, 0.005, 0.006) - dont include this
-# y <- x14$altitude
-# x.err <- x14$ageSds
-#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
-#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-# plot(x, y, pch = 21, col= "darkgrey", bg= "darkgrey", cex = 1,
-     # xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,200), axes = FALSE)
-# arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "grey", lwd = 1)
-# par(new=TRUE)
-# plot(x, y, pch = 21, col= "darkgrey", bg= "darkgrey", cex = 1,
-     # xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,200), axes = FALSE)
-# axis(4,  seq(0,200,100), tck=-0.04, ylim=c(0,100), col = "grey", col.lab = "grey", col.axis = "grey")
-# axis(4, seq(0,200,25),labels=rep("",9), tck=-0.02, ylim=c(0,100), col = "grey", col.lab = "grey", col.axis = "grey")
-# mtext("", side=4, line=2, col = "red", cex = 0.75)
-
-# Add new Fildes new cosmo ages to secondary axis of altitude
-par(new=TRUE)
-x <- x13$ages
-#y <- c(0.004, 0.005, 0.006)
-y <- x13$altitude
-x.err <- x13$ageSds
-#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
-#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 21, col= "black", bg= "white", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
-par(new=TRUE)
-plot(x, y, pch = 21, col= "#black", bg= "#white", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-axis(4,  ylim=c(0,300), col = "black", col.lab = "black", col.axis = "black")
-mtext("Altitude (m a.s.l.)", side=4, line=2, col = "black", cex = 0.75)
-par(new = FALSE) #remove hold on the plot frame to add median values
-#par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
-#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
-
-# KGI early Holocene deglaiation constraints -  new cosmo ages to secondary axis of altitude
-par(new=TRUE)
-x <- x9.4$ages
-#y <- c(0.004, 0.005, 0.006)
-y <- x9.4$altitude
-x.err <- x9.4$ageSds
-#arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00)
-#points(x, y, pch = 21, col= "black", bg = "red", cex=2)
-plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-arrows(x0=x-x.err, y0=y, x1=x+x.err, code=3, angle=90, length = 0.00, col= "darkgrey", lwd = 1)
-par(new=TRUE)
-plot(x, y, pch = 21, col= "#808080", bg= "#808080", cex = 1,
-     xlab = "", ylab = "", xlim=c(-100,18000), ylim=c(0,300), axes = FALSE)
-axis(4,  ylim=c(0,300), col = "black", col.lab = "black", col.axis = "black")
-mtext("Altitude (m a.s.l.)", side=4, line=2, col = "black", cex = 0.75)
-par(new = FALSE) #remove hold on the plot frame to add median values
-#par(mai=c(0.1,0.25,0.3,0.25), pin=c(plotinch, plotinch/3), mgp=c(3,1,0), xaxs='i') # Set up internal margins
-#xas = "i" tells plot device not to add 4% extra internal margin (which default plot style in R)
-
-
 
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++ END +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # ++++++++++++++++ SOME OTHER USEFUL CODE AND STUFF ++++++++++++++ --------
+
+
+legend("topright",
+       legend = rownames(gfg_data),
+       pch = 15,
+       col = 1:nrow(gfg_data),cex=2.5)
+
+# Use Stacked SPD plot - note that S&J earlier distribution in 'stacked' plot shown in multipanel plot ends up plotting behind - fix this
+
+# STACKED PLOTS
+r6_timeRange <- c(12000,-100)
+r6_revtimeRange <- c(-100,12000)
+plot(r6_res,type='stacked', xlim = r6_revtimeRange, legend = TRUE, legend.arg = NULL)  #most useful for summaries of multiple sites / types
+#plot(res1,type='proportion')
+#plot(r6_res,type='multipanel', xlim = r6_revtimeRange, legend = TRUE, legend.arg = NULL) #nice clear plot for one site 
+
+
 
 # Convert a to ka if needed
 x19a <- read.csv("Inputs/x19a_YAN_A_tephra_ages.csv") #airfall only - with T3a lower error extending to T3c
