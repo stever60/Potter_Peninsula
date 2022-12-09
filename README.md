@@ -1,4 +1,14 @@
+# Potter Peninsula, South Shetland Islands
+
 Chronological and sedimentological studies from Potter Peninsula, South Shetland Islands.
+
+Consisting of the following folders
+
+BChron -  input/output data and R code for chronological analysis from sites on King George Island 
+
+RCarbon - input/output data and R code for chronological analysis from sites on King George Island 
+
+Potter_data - datasets and metadata for data from Potter Peninsula
 
 These folders contain data and code for stratigraphic chronological and sedimentological data and data compilations from Potter Peninsula, King George Island, and the South Shetland Islands. 
 
@@ -6,9 +16,9 @@ The data have been used to constrain deglaciation and glacier dynamics on Potter
 
 The code folder contains R code and data used to analyse the data and construct figures for the following submitted manuscripts: 
 
-Heredia Barión P, Roberts SJ, Spiegel C, Binnie SA, Wacker L, Davies J, et al. (submitted - a) Mid–late Holocene deglaciation and glacier readvances on the Fildes Peninsula, King George Island, NW Antarctic Peninsula. The Holocene.
+Heredia Barión P, Roberts SJ, Spiegel C, Binnie SA, Wacker L, Davies J, et al. (in review) Holocene deglaciation and glacier readvances on the Fildes Peninsula, King George Island, NW Antarctic Peninsula. The Holocene. https://doi.org/10.31223/X59S7S
 
-Heredia Barión P, Strelin JA, Roberts SJ, Spiegel C, Wacker L, Niedermann S, et al. (submitted - b). Holocene deglaciation, glacial dynamics and the geomorphology of Potter Peninsula, King George Island (Isla 25 de Mayo), NW Antarctic Peninsula. Frontiers in Earth Science.
+Heredia Barión P, Strelin JA, Roberts SJ, Spiegel C, Wacker L, Niedermann S, et al. (in press). Holocene deglaciation, glacial dynamics and the geomorphology of Potter Peninsula, King George Island (Isla 25 de Mayo), NW Antarctic Peninsula. Frontiers in Earth Science. https://doi.org/10.31223/X5606J
 
 Contact details: Stephen Roberts - sjro@bas.ac.uk
 
