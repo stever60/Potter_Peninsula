@@ -1,0 +1,8 @@
+﻿,,,,,,,,Calibrated_age_(cal_a_BP),,,,,,,,,
+ID_No.,Lab_ID,Material_dated,_Section_or_Core_Depth_(m),Unit,delta13C_ppm,AMS_14C_age_(14C_a),AMS_14C_age_1SD_(14C_a),Max.,Min.,1sigma_%,Max.,Min.,2sigma_%,Mean,2sigma,Median,Matrix_dated_context_interpretation
+28,Beta-384259,Lake L15 Aquatic moss,0-0.01,2,−22.6,-1017,21,-43.2,-44.4,66.9,-45.1,-42.9,66.6,-44,-1.1,-44,"Aquatic moss in lake seds.; warmer, ice-free"
+28,Beta-384259,Lake L15 Aquatic moss,0-0.01,2,−22.6,-1017,21,-9.1,-9.5,26,-9.6,-9.1,21.2,-9.3,-0.3,-9.3,"Aquatic moss in lake seds.; warmer, ice-free"
+29,Beta-384260,Lake L15 Aquatic moss,0.035-0.04,2,−20.2,-1213,28,-39.2,-41.1,69.5,-38.3,-43.1,92.4,-40.7,2.4,-40.7,"Aquatic moss in lake seds.; warmer, ice-free"
+29,Beta-384260,Lake L15 Aquatic moss,0.035-0.04,2,−20.2,-1213,28,-9.7,-9.8,4.1,-9.9,-9.6,4,-9.8,-0.1,-9.8,"Aquatic moss in lake seds.; warmer, ice-free"
+30,Beta-386311,Lake L15 Plant fragments,0.06-0.065,2,NA,710,40,660,630,33.6,670,560,95.4,620,70,610,"Aquatic moss in lake seds.; warmer, ice-free"
+30,Beta-386311,Lake L15 Plant fragments,0.06-0.065,2,NA,710,40,600,570,34.7,NA,NA,NA,NA,NA,NA,"Aquatic moss in lake seds.; warmer, ice-free"
